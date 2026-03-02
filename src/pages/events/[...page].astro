@@ -1,0 +1,60 @@
+---
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import EventCard from '@/components/EventCard.astro'
+import PageHead from '@/components/PageHead.astro'
+import PaginationComponent from '@/components/ui/pagination'
+import { SITE } from '@/consts'
+import Layout from '@/layouts/Layout.astro'
+import { getAllEvents, groupEventsByYear } from '@/lib/data-utils'
+import type { PaginateFunction } from 'astro'
+
+export async function getStaticPaths({
+  paginate,
+}: {
+  paginate: PaginateFunction
+}) {
+  const allEvents = await getAllEvents()
+  return paginate(allEvents, { pageSize: SITE.eventsPerPage })
+}
+
+const { page } = Astro.props
+
+const eventsByYear = groupEventsByYear(page.data)
+const years = Object.keys(eventsByYear).sort(
+  (a, b) => parseInt(b) - parseInt(a),
+)
+---
+
+<Layout class="max-w-3xl">
+  <PageHead slot="head" title="Events" />
+  <Breadcrumbs
+    items={[
+      { label: 'Events', href: '/events', icon: 'lucide:calendar-range' },
+      { label: `Page ${page.currentPage}`, icon: 'lucide:calendar' },
+    ]}
+  />
+
+  <div class="flex min-h-[calc(100vh-18rem)] flex-col gap-y-8">
+    {
+      years.map((year) => (
+        <section class="flex flex-col gap-y-4">
+          <div class="font-medium">{year}</div>
+          <ul class="flex flex-col gap-4">
+            {eventsByYear[year].map((event) => (
+              <li>
+                <EventCard entry={event} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+
+  <PaginationComponent
+    currentPage={page.currentPage}
+    totalPages={page.lastPage}
+    baseUrl="/events/"
+    client:load
+  />
+</Layout>

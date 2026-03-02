@@ -5,7 +5,9 @@ export type Site = {
   author: string
   locale: string
   featuredPostCount: number
+  featuredEventsCount: number
   postsPerPage: number
+  eventsPerPage: number
 }
 
 export type SocialLink = {

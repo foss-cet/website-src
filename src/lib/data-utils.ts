@@ -21,6 +21,25 @@ export async function getAllPostsAndSubposts(): Promise<
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 }
 
+export async function getAllEvents(): Promise<CollectionEntry<'events'>[]> {
+  const events = await getCollection('events')
+  return events
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+}
+
+export function groupEventsByYear(
+  events: CollectionEntry<'events'>[],
+): Record<string, CollectionEntry<'events'>[]> {
+  return events.reduce(
+    (acc: Record<string, CollectionEntry<'events'>[]>, post) => {
+      const year = post.data.date.getFullYear().toString()
+      ;(acc[year] ??= []).push(post)
+      return acc
+    },
+    {},
+  )
+}
+
 export async function getAllProjects(): Promise<CollectionEntry<'projects'>[]> {
   const projects = await getCollection('projects')
   return projects.sort((a, b) => {
@@ -36,6 +55,14 @@ export async function getAllTags(): Promise<Map<string, number>> {
     post.data.tags?.forEach((tag) => {
       acc.set(tag, (acc.get(tag) || 0) + 1)
     })
+    return acc
+  }, new Map<string, number>())
+}
+
+export async function getAllTypes(): Promise<Map<string, number>> {
+  const events = await getAllEvents()
+  return events.reduce((acc, event) => {
+      acc.set(event.data.type, (acc.get(event.data.type) || 0) + 1)
     return acc
   }, new Map<string, number>())
 }
@@ -99,6 +126,19 @@ export async function getAdjacentPosts(currentId: string): Promise<{
   }
 }
 
+export async function getAdjacentEvents(currentId: string): Promise<{
+  newer: CollectionEntry<'events'> | null
+  older: CollectionEntry<'events'> | null
+  parent: CollectionEntry<'events'> | null
+}> {
+  const allEvents = await getAllEvents()
+  const currentIndex = allEvents.findIndex((event) => event.id === currentId)
+  const newer = currentIndex > 0 ? allEvents[currentIndex - 1] : null
+  const older =
+    currentIndex < allEvents.length - 1 ? allEvents[currentIndex + 1] : null
+  return { newer, older, parent: null }
+}
+
 export async function getPostsByAuthor(
   authorId: string,
 ): Promise<CollectionEntry<'blog'>[]> {
@@ -113,11 +153,25 @@ export async function getPostsByTag(
   return posts.filter((post) => post.data.tags?.includes(tag))
 }
 
+export async function getEventsByType(
+  type: string,
+): Promise<CollectionEntry<'events'>[]> {
+  const events = await getAllEvents()
+  return events.filter((event) => event.data.type === type)
+}
+
 export async function getRecentPosts(
   count: number,
 ): Promise<CollectionEntry<'blog'>[]> {
   const posts = await getAllPosts()
   return posts.slice(0, count)
+}
+
+export async function getRecentEvents(
+  count: number,
+): Promise<CollectionEntry<'events'>[]> {
+  const events = await getAllEvents()
+  return events.slice(0, count)
 }
 
 export async function getSortedTags(): Promise<

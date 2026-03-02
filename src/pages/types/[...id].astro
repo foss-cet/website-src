@@ -1,0 +1,53 @@
+---
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import PageHead from '@/components/PageHead.astro'
+import Layout from '@/layouts/Layout.astro'
+import { getAllTypes, getEventsByType } from '@/lib/data-utils'
+import { capitalizeFirstLetter, iconMappings } from '@/lib/utils'
+import EventCard from '../../components/EventCard.astro'
+
+export async function getStaticPaths() {
+  const typeMap = await getAllTypes()
+  const uniqueTags = Array.from(typeMap.keys())
+
+  return Promise.all(
+    uniqueTags.map(async (type) => {
+      const events = await getEventsByType(type)
+      return {
+        params: { id: type },
+        props: {
+          type,
+          events,
+        },
+      }
+    }),
+  )
+}
+
+const { type, events } = Astro.props
+---
+
+<Layout class="max-w-3xl">
+  <PageHead
+    slot="head"
+    title={`${capitalizeFirstLetter(type)} Events`}
+    description={`A collection of ${type} events.`}
+    noindex
+  />
+  <Breadcrumbs
+    items={[
+      { href: '/types', label: 'Event types', icon: 'lucide:calendar' },
+      { label: type, icon: iconMappings[type] || 'lucide:ticket' },
+    ]}
+  />
+
+  <ul class="flex flex-col gap-y-4">
+    {
+      events.map((event) => (
+        <li>
+          <EventCard entry={event} />
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

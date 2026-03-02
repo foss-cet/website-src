@@ -8,7 +8,9 @@ export const SITE: Site = {
   author: 'fosscet',
   locale: 'en-US',
   featuredPostCount: 2,
+  featuredEventsCount: 2,
   postsPerPage: 3,
+  eventsPerPage: 3,
 }
 
 export const NAV_LINKS: SocialLink[] = [
@@ -23,6 +25,10 @@ export const NAV_LINKS: SocialLink[] = [
   {
     href: '/about',
     label: 'about',
+  },
+  {
+    href: '/events',
+    label: 'events',
   },
 ]
 
