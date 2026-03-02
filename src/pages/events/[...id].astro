@@ -25,11 +25,11 @@ export async function getStaticPaths() {
 }
 
 const event = Astro.props
-const currentPostId = Astro.params.id
-const navigation = await getAdjacentEvents(currentPostId)
+const currentEventId = Astro.params.id
+const navigation = await getAdjacentEvents(currentEventId)
 const { Content, headings } = await render(event)
 
-const tocSections = await getTOCSections(currentPostId)
+const tocSections = await getTOCSections(currentEventId)
 ---
 
 <Layout>
@@ -45,7 +45,15 @@ const tocSections = await getTOCSections(currentPostId)
   >
     <div class="col-start-2">
       <Breadcrumbs
-        items={[{ href: '/events', label: 'Events', icon: 'lucide:calendar' }]}
+        items={[
+          { href: '/events', label: 'Events', icon: 'lucide:calendar-days' },
+
+          {
+            href: `/events/${currentEventId}`,
+            label: event.data.title,
+            icon: 'lucide:calendar-check',
+          },
+        ]}
       />
     </div>
 
@@ -100,7 +108,7 @@ const tocSections = await getTOCSections(currentPostId)
 
     {
       tocSections.length > 0 && (
-        <TOCSidebar sections={tocSections} currentPostId={currentPostId} />
+        <TOCSidebar sections={tocSections} currentPostId={currentEventId} />
       )
     }
 
