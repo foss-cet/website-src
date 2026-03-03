@@ -3,8 +3,8 @@ import type { IconMap, SocialLink, Site } from '@/types'
 export const SITE: Site = {
   title: 'FOSSCET',
   description:
-    "Don't just join a club; build one. We need architects, not just members",
-  href: 'https://astro-erudite.vercel.app',
+    "We are a community of hackers, builders, and privacy advocates dedicated to Free and Open Source Software.",
+  href: 'https://fosscet.codeberg.page/',
   author: 'fosscet',
   locale: 'en-US',
   featuredPostCount: 2,
