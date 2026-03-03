@@ -43,6 +43,12 @@ import Favicons from './Favicons.astro'
   />
 
   <Favicons />
+  <link
+    rel="prefetch"
+    href="/api/search-index.json"
+    as="fetch"
+    crossorigin="anonymous"
+  />
   <ClientRouter />
 
   <slot />
