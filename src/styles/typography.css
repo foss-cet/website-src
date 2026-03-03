@@ -18,6 +18,7 @@
   h5,
   h6 {
     @apply text-balance;
+    @apply font-mono;
   }
 
   p {
@@ -134,8 +135,8 @@
     }
 
     :where(img, video, figure, .expressive-code):not(
-        :where(.not-prose, .not-prose *)
-      ) {
+      :where(.not-prose, .not-prose *)
+    ) {
       @apply mx-auto my-6;
     }
 

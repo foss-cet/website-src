@@ -1,7 +1,7 @@
 import type { IconMap, SocialLink, Site } from '@/types'
 
 export const SITE: Site = {
-  title: 'FOSS CET',
+  title: 'FOSSCET',
   description:
     "Don't just join a club; build one. We need architects, not just members",
   href: 'https://astro-erudite.vercel.app',
