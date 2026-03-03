@@ -8,21 +8,25 @@ import logo from '../../public/static/logo.svg'
 ---
 
 <div class="border-b md:border-b-0">
+  <div id="scroll-trigger" class="relative -top-0.5 h-px"></div>
   <div
-    class="mx-auto flex max-w-3xl flex-row items-center justify-center gap-4 px-4 py-3 md:justify-between"
+    id="navbar"
+    class="mx-auto flex max-w-3xl flex-row items-center justify-between gap-4 px-4 py-3"
   >
-    <Link
-      href="/"
-      class="hidden shrink-0 items-center justify-center gap-3 md:flex"
-    >
-      <Image src={logo} alt="Logo" class="size-5 sm:size-6" />
+    <Link href="/" class="shrink-0 items-center justify-center gap-3 md:flex">
+      <Image
+        src={logo}
+        alt="Logo"
+        id="navbar-logo"
+        class="size-8 transition-all duration-300 md:size-12 md:saturate-100"
+      />
       <span
         class="hidden h-full py-4 font-mono leading-none font-medium italic md:block md:text-3xl"
       >
         foss<span class="text-primary">cet</span>
       </span>
     </Link>
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-4 transition-all">
       <nav class="flex items-center gap-4 text-sm sm:gap-6">
         {
           NAV_LINKS.map((item) => (
@@ -40,3 +44,41 @@ import logo from '../../public/static/logo.svg'
     </div>
   </div>
 </div>
+
+<script>
+  const target = document.querySelector('#scroll-trigger')
+  const nav = document.querySelector('#navbar') as HTMLDivElement
+  const logo = document.querySelector('#navbar-logo') as HTMLImageElement
+
+  if (!target) {
+    console.error(
+      "Observer Error: Target element '#scroll-trigger' not found in DOM.",
+    )
+  } else {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          console.log('Intersection Ratio:', entry.intersectionRatio)
+          console.log('Is Intersecting?:', entry.isIntersecting)
+
+          if (!entry.isIntersecting) {
+            console.log('Trigger hit the top (Exited viewport)')
+            document.querySelector('#main-nav')?.classList.add('is-at-top')
+            logo.classList.remove('opacity-0', 'scale-0', 'w-0')
+            nav.style.marginLeft = '0'
+            nav.style.justifyContent = 'space-between'
+          } else {
+            console.log('Trigger is back in view')
+            document.querySelector('#main-nav')?.classList.remove('is-at-top')
+            logo.classList.add('opacity-0', 'scale-0', 'w-0')
+            nav.style.marginLeft = '-1rem'
+            nav.style.justifyContent = 'center'
+          }
+        })
+      },
+      { threshold: 0 },
+    )
+
+    observer.observe(target)
+  }
+</script>
