@@ -1,5 +1,4 @@
 ---
-import { Badge } from '@/components/ui/badge'
 import { formatDate, iconMappings } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
@@ -37,24 +36,23 @@ const formattedDate = formatDate(entry.data.date)
 
     <div class="grow">
       <h3 class="mb-1 text-lg font-medium">{entry.data.title}</h3>
-      <p class="text-muted-foreground mb-2 text-sm">{entry.data.description}</p>
+      <p class="text-muted-foreground mb-4">{entry.data.description}</p>
 
       <div
-        class="text-muted-foreground mb-2 flex flex-wrap items-center gap-x-2 text-xs"
+        class="text-muted-foreground mb-2 flex flex-wrap items-center gap-1 text-xs"
       >
+        <Icon name="lucide:calendar" class="size-3" />
         <span>{formattedDate}</span>
       </div>
 
       {
         entry.data.type && (
-          <div class="flex flex-wrap gap-2">
-            <Badge variant="muted" className="flex items-center gap-x-1">
-              <Icon
-                name={iconMappings[entry.data.type] || 'lucide:hash'}
-                class="size-3"
-              />
-              {entry.data.type}
-            </Badge>
+          <div class="text-muted-foreground mb-2 flex flex-wrap items-center gap-1 text-xs">
+            <Icon
+              name={iconMappings[entry.data.type] || 'lucide:hash'}
+              class="size-3"
+            />
+            <span class="capitalize">{entry.data.type}</span>
           </div>
         )
       }

@@ -44,4 +44,6 @@ export const iconMappings: Record<string, string> = {
   competition: 'lucide:trophy',
   game: 'lucide:gamepad-2',
   quiz: 'lucide:brain',
+  community: 'lucide:users',
+  discussion: 'lucide:messages-square',
 }
