@@ -7,20 +7,21 @@ import type { CollectionEntry } from 'astro:content'
 import SocialIcons from './SocialIcons.astro'
 
 interface Props {
-  author: CollectionEntry<'authors'>
+  member: CollectionEntry<'members'>
 }
 
-const { author } = Astro.props
-const { name, avatar, bio, pronouns } = author.data
+const { member } = Astro.props
+const { name, avatar, bio, pronouns } = member.data
 const currentPath = Astro.url.pathname
-const isAuthorPage = currentPath === `/authors/${author.id}`
+const isAuthorPage = currentPath === `/members/${member.id}`
 
 const socialLinks: SocialLink[] = [
-  author.data.website && { href: author.data.website, label: 'Website' },
-  author.data.github && { href: author.data.github, label: 'GitHub' },
-  author.data.twitter && { href: author.data.twitter, label: 'Twitter' },
-  author.data.linkedin && { href: author.data.linkedin, label: 'LinkedIn' },
-  author.data.mail && { href: `mailto:${author.data.mail}`, label: 'Email' },
+  member.data.website && { href: member.data.website, label: 'Website' },
+  member.data.github && { href: member.data.github, label: 'GitHub' },
+  member.data.codeberg && { href: member.data.codeberg, label: 'Codeberg' },
+  member.data.twitter && { href: member.data.twitter, label: 'Twitter' },
+  member.data.linkedin && { href: member.data.linkedin, label: 'LinkedIn' },
+  member.data.mail && { href: `mailto:${member.data.mail}`, label: 'Email' },
 ].filter(Boolean) as SocialLink[]
 ---
 
@@ -29,7 +30,7 @@ const socialLinks: SocialLink[] = [
 >
   <div class="flex flex-wrap gap-4">
     <Link
-      href={`/authors/${author.id}`}
+      href={`/members/${member.id}`}
       class={cn('block', isAuthorPage && 'pointer-events-none')}
     >
       <AvatarComponent
@@ -38,7 +39,7 @@ const socialLinks: SocialLink[] = [
         alt={`Avatar of ${name}`}
         fallback={name[0]}
         className={cn(
-          'size-32 rounded-md [&>[data-slot="avatar-fallback"]]:rounded-md',
+          '.:data-[slot="avatar-fallback"]:rounded-md size-32 rounded-md',
           !isAuthorPage &&
             'hover:ring-primary transition-shadow duration-300 hover:cursor-pointer hover:ring-2',
         )}

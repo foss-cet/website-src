@@ -30,8 +30,8 @@ const blog = defineCollection({
     }),
 })
 
-const authors = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/authors' }),
+const members = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/members' }),
   schema: z.object({
     name: z.string(),
     pronouns: z.string().optional(),
@@ -41,6 +41,7 @@ const authors = defineCollection({
     website: z.string().url().optional(),
     twitter: z.string().url().optional(),
     github: z.string().url().optional(),
+    codeberg: z.string().url().optional(),
     linkedin: z.string().url().optional(),
     discord: z.string().url().optional(),
   }),
@@ -60,4 +61,4 @@ const projects = defineCollection({
     }),
 })
 
-export const collections = { events, blog, authors, projects }
+export const collections = { events, blog, members, projects }

@@ -1,0 +1,58 @@
+---
+import BlogCard from '@/components/BlogCard.astro'
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import MemberCard from '@/components/MemberCard.astro'
+import PageHead from '@/components/PageHead.astro'
+import Layout from '@/layouts/Layout.astro'
+import { getAllMembers, getPostsByAuthor } from '@/lib/data-utils'
+
+export async function getStaticPaths() {
+  const members = await getAllMembers()
+  return members.map((member) => ({
+    params: { id: member.id },
+    props: { member },
+  }))
+}
+
+const { member } = Astro.props
+const memberPosts = await getPostsByAuthor(member.id)
+---
+
+<Layout class="max-w-3xl">
+  <PageHead
+    slot="head"
+    title={`${member.data.name} (Member)`}
+    description={member.data.bio || `Profile of ${member.data.name}.`}
+    noindex
+  />
+  <Breadcrumbs
+    items={[
+      { href: '/members', label: 'Members', icon: 'lucide:users' },
+      { label: member.data.name, icon: 'lucide:user' },
+    ]}
+  />
+
+  <section>
+    <MemberCard member={member} />
+  </section>
+  <section class="flex flex-col gap-y-4">
+    <h2 class="text-2xl font-medium">Posts by {member.data.name}</h2>
+    {
+      memberPosts.length > 0 ? (
+        <ul class="flex flex-col gap-4">
+          {memberPosts
+            .filter((post) => !post.data.draft)
+            .map((post) => (
+              <li>
+                <BlogCard entry={post} />
+              </li>
+            ))}
+        </ul>
+      ) : (
+        <p class="text-muted-foreground">
+          No posts available from this member.
+        </p>
+      )
+    }
+  </section>
+</Layout>

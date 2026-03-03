@@ -19,7 +19,8 @@ const isSubpost = !!parentPost
     class={cn(
       buttonVariants({ variant: 'outline' }),
       'rounded-lg group flex items-center justify-start size-full',
-      !olderPost && 'pointer-events-none opacity-0 cursor-not-allowed',
+      !olderPost &&
+        'pointer-events-none opacity-0 invisible cursor-not-allowed',
     )}
     aria-disabled={!olderPost}
   >
@@ -71,7 +72,8 @@ const isSubpost = !!parentPost
     class={cn(
       buttonVariants({ variant: 'outline' }),
       'rounded-lg group flex items-center justify-end size-full',
-      !newerPost && 'pointer-events-none opacity-0 cursor-not-allowed',
+      !newerPost &&
+        'pointer-events-none opacity-0 invisible cursor-not-allowed',
     )}
     aria-disabled={!newerPost}
   >

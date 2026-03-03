@@ -3,7 +3,7 @@ import type { IconMap, SocialLink, Site } from '@/types'
 export const SITE: Site = {
   title: 'FOSS CET',
   description:
-    'Don\'t just join a club; build one. We need architects, not just members',
+    "Don't just join a club; build one. We need architects, not just members",
   href: 'https://astro-erudite.vercel.app',
   author: 'fosscet',
   locale: 'en-US',
@@ -19,8 +19,8 @@ export const NAV_LINKS: SocialLink[] = [
     label: 'blog',
   },
   {
-    href: '/authors',
-    label: 'authors',
+    href: '/members',
+    label: 'members',
   },
   {
     href: '/about',
@@ -34,8 +34,8 @@ export const NAV_LINKS: SocialLink[] = [
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
-    href: 'https://codeberg.org/foss-cet',
-    label: 'CodeBerg',
+    href: 'https://codeberg.org/fosscet',
+    label: 'Codeberg',
   },
   {
     href: '/rss.xml',
@@ -45,7 +45,8 @@ export const SOCIAL_LINKS: SocialLink[] = [
 
 export const ICON_MAP: IconMap = {
   Website: 'lucide:globe',
-  CodeBerg: 'lucide:mountain-snow',
+  Codeberg: 'lucide:mountain-snow',
+  GitHub: 'lucide:github',
   LinkedIn: 'lucide:linkedin',
   Twitter: 'lucide:twitter',
   Email: 'lucide:mail',

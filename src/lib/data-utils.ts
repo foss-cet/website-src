@@ -1,8 +1,8 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content'
 import { readingTime, calculateWordCountFromHtml } from '@/lib/utils'
 
-export async function getAllAuthors(): Promise<CollectionEntry<'authors'>[]> {
-  return await getCollection('authors')
+export async function getAllMembers(): Promise<CollectionEntry<'members'>[]> {
+  return await getCollection('members')
 }
 
 export async function getAllPosts(): Promise<CollectionEntry<'blog'>[]> {
@@ -23,8 +23,7 @@ export async function getAllPostsAndSubposts(): Promise<
 
 export async function getAllEvents(): Promise<CollectionEntry<'events'>[]> {
   const events = await getCollection('events')
-  return events
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  return events.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 }
 
 export function groupEventsByYear(
@@ -62,7 +61,7 @@ export async function getAllTags(): Promise<Map<string, number>> {
 export async function getAllTypes(): Promise<Map<string, number>> {
   const events = await getAllEvents()
   return events.reduce((acc, event) => {
-      acc.set(event.data.type, (acc.get(event.data.type) || 0) + 1)
+    acc.set(event.data.type, (acc.get(event.data.type) || 0) + 1)
     return acc
   }, new Map<string, number>())
 }
@@ -248,7 +247,7 @@ export async function getParentPost(
 export async function parseAuthors(authorIds: string[] = []) {
   if (!authorIds.length) return []
 
-  const allAuthors = await getAllAuthors()
+  const allAuthors = await getAllMembers()
   const authorMap = new Map(allAuthors.map((author) => [author.id, author]))
 
   return authorIds.map((id) => {
