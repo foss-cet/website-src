@@ -4,7 +4,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
 
-const { newerPost, olderPost, parentPost } = Astro.props
+const { newerPost, olderPost, parentPost, baseURL } = Astro.props
 const isSubpost = !!parentPost
 ---
 
@@ -15,11 +15,11 @@ const isSubpost = !!parentPost
   )}
 >
   <Link
-    href={olderPost ? `/blog/${olderPost.id}#post-title` : '#'}
+    href={olderPost ? `${baseURL}${olderPost.id}#post-title` : '#'}
     class={cn(
       buttonVariants({ variant: 'outline' }),
       'rounded-lg group flex items-center justify-start size-full',
-      !olderPost && 'pointer-events-none opacity-50 cursor-not-allowed',
+      !olderPost && 'pointer-events-none opacity-0 cursor-not-allowed',
     )}
     aria-disabled={!olderPost}
   >
@@ -43,7 +43,7 @@ const isSubpost = !!parentPost
   {
     isSubpost && (
       <Link
-        href={parentPost ? `/blog/${parentPost.id}#post-title` : '#'}
+        href={parentPost ? `${baseURL}${parentPost.id}#post-title` : '#'}
         class={cn(
           buttonVariants({ variant: 'outline' }),
           'group flex size-full items-center justify-center rounded-lg',
@@ -67,11 +67,11 @@ const isSubpost = !!parentPost
   }
 
   <Link
-    href={newerPost ? `/blog/${newerPost.id}#post-title` : '#'}
+    href={newerPost ? `${baseURL}${newerPost.id}#post-title` : '#'}
     class={cn(
       buttonVariants({ variant: 'outline' }),
       'rounded-lg group flex items-center justify-end size-full',
-      !newerPost && 'pointer-events-none opacity-50 cursor-not-allowed',
+      !newerPost && 'pointer-events-none opacity-0 cursor-not-allowed',
     )}
     aria-disabled={!newerPost}
   >

@@ -1,6 +1,6 @@
 ---
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
-import EventNavigation from '@/components/EventNavigation.astro'
+import PostNavigation from '@/components/PostNavigation.astro'
 import TOCHeader from '@/components/TOCHeader.astro'
 import TOCSidebar from '@/components/TOCSidebar.astro'
 import { badgeVariants } from '@/components/ui/badge'
@@ -116,9 +116,10 @@ const tocSections = await getTOCSections(currentEventId)
       <Content />
     </article>
 
-    <EventNavigation
-      newerEvent={navigation.newer}
-      olderEvent={navigation.older}
+    <PostNavigation
+      newerPost={navigation.newer}
+      olderPost={navigation.older}
+      baseURL="/events/"
     />
   </section>
 
