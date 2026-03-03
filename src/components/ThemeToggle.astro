@@ -10,8 +10,11 @@ import { Icon } from 'astro-icon/components'
   title="Toggle theme"
   className="-my-2 -me-2 size-8"
 >
-  <Icon name="lucide:sun" class="size-4 dark:hidden" />
-  <Icon name="lucide:moon" class="absolute hidden size-4 dark:block" />
+  <Icon name="lucide:sun" class="text-muted-foreground size-4 dark:hidden" />
+  <Icon
+    name="lucide:moon"
+    class="text-muted-foreground absolute hidden size-4 dark:block"
+  />
   <span class="sr-only">Toggle theme</span>
 </Button>
 

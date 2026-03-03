@@ -1,6 +1,10 @@
 @reference './global.css';
 
 @layer base {
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
   p,
   h1,
   h2,
@@ -64,7 +68,7 @@
     }
 
     :where(a):not(:where(.not-prose, .not-prose *)) {
-      @apply text-foreground decoration-muted-foreground hover:decoration-foreground font-medium break-words underline underline-offset-[3px] transition-colors;
+      @apply text-foreground decoration-primary hover:decoration-foreground hidden font-medium break-words underline underline-offset-[3px] transition-colors;
     }
 
     :where(strong):not(:where(.not-prose, .not-prose *)) {

@@ -12,10 +12,11 @@ const SearchButton: React.FC = () => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Don't trigger if user is typing in an input, textarea, or contenteditable
       const target = e.target as HTMLElement
-      const isInput = target.tagName === 'INPUT' || 
-                      target.tagName === 'TEXTAREA' || 
-                      target.isContentEditable
-      
+      const isInput =
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.isContentEditable
+
       if ((e.metaKey || e.ctrlKey) && e.key === 'k' && !isInput) {
         e.preventDefault()
         setIsOpen(true)
@@ -29,16 +30,17 @@ const SearchButton: React.FC = () => {
   return (
     <ErrorBoundary>
       <Button
-        variant="outline"
+        variant="ghost"
         size="icon"
         onClick={() => setIsOpen(true)}
-        className="size-9 border md:border-0 md:bg-transparent md:hover:bg-muted md:-my-2 md:-me-2 md:size-8"
+        // className="md:hover:bg-muted size-9 border md:-my-2 md:-me-2 md:size-8 border-0 md:bg-transparent"
+        className="-my-2 -me-2 size-8"
         title="Search (⌘K)"
         aria-label="Search blog posts"
         aria-expanded={isOpen}
         aria-haspopup="dialog"
       >
-        <Search className="h-5 w-5 md:h-4 md:w-4" />
+        <Search className="text-muted-foreground h-5 w-5 md:h-4 md:w-4" />
         <span className="sr-only">Search</span>
       </Button>
       <ErrorBoundary>
