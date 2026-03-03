@@ -10,7 +10,7 @@ const events = defineCollection({
       date: z.coerce.date(),
       order: z.number().optional(),
       image: image().optional(),
-      type: z.string().optional(),
+      type: z.string(),
       draft: z.boolean().optional(),
     }),
 })

@@ -36,12 +36,12 @@ export function getHeadingMargin(depth: number): string {
   return margins[depth] || ''
 }
 export function capitalizeFirstLetter(val: string): string {
-    return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+  return String(val).charAt(0).toUpperCase() + String(val).slice(1)
 }
 
-export const iconMappings = {
-  "workshop": "lucide:hammer",
-  "competition": "lucide:trophy",
-  "game": "lucide:gamepad-2",
-  "quiz": "lucide:brain"
+export const iconMappings: Record<string, string> = {
+  workshop: 'lucide:hammer',
+  competition: 'lucide:trophy',
+  game: 'lucide:gamepad-2',
+  quiz: 'lucide:brain',
 }
