@@ -242,7 +242,7 @@ const tocSections = await getTOCSections(currentPostId)
     <PostNavigation
       newerPost={navigation.newer}
       olderPost={navigation.older}
-      path="blog"
+      baseURL="/blog/"
       parentPost={isCurrentSubpost ? navigation.parent : undefined}
     />
   </section>
