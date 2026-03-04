@@ -15,6 +15,16 @@
     @apply wrap-break-word;
   }
 
+  ::marker {
+    @apply text-muted-foreground font-mono;
+  }
+
+  h2::before {
+    content: '> ';
+    /*margin-left: -2ch;*/
+    @apply text-primary opacity-55;
+  }
+
   h1,
   h2,
   h3,

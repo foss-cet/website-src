@@ -1,0 +1,30 @@
+---
+import { cn } from '@/lib/utils'
+
+interface Props {
+  year: string
+  title: string
+  text: string
+  fancy: boolean
+}
+
+const { year, title, text, fancy = false } = Astro.props
+---
+
+<div class="group relative flex items-center pl-8">
+  <div
+    class={cn(
+      'ml-4 w-full rounded-2xl border p-6 shadow-2xl backdrop-blur-sm',
+      fancy
+        ? 'border-border bg-linear-to-bl from-primary/10  to-transparent'
+        : 'border-border',
+    )}
+  >
+    <div class="mb-2 flex items-center" id="container">
+      <span class="bg-background absolute top-8 -left-13 font-mono">{year}</span
+      >
+    </div>
+    <h3 class="mb-2 text-xl">{title}</h3>
+    <p class="text-muted-foreground leading-relaxed">{text}</p>
+  </div>
+</div>

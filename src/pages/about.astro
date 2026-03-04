@@ -1,6 +1,7 @@
 ---
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import PageHead from '@/components/PageHead.astro'
+import TimelineCard from '@/components/TimelineCard.astro'
 import Layout from '@/layouts/Layout.astro'
 ---
 
@@ -8,26 +9,25 @@ import Layout from '@/layouts/Layout.astro'
   <PageHead slot="head" title="About" />
   <Breadcrumbs items={[{ label: 'About', icon: 'lucide:info' }]} />
   <div class="mx-auto max-w-4xl">
-    <section class="px-6 pt-24 pb-20">
+    <section class="px-6 pt-24">
       <div class="hero-content mx-auto max-w-6xl text-center">
         <h1
-          class="hidden h-full py-4 font-mono leading-none font-medium italic md:block md:text-7xl"
+          class="h-full py-4 font-mono text-4xl leading-none font-medium italic md:text-6xl"
         >
           foss<span class="text-primary">cet</span>
         </h1>
         <p
-          class="mx-auto mb-12 max-w-3xl text-xl leading-relaxed text-slate-500 md:text-2xl dark:text-slate-300"
+          class="text-muted-foreground mx-auto mt-6 mb-12 max-w-3xl text-xl leading-relaxed"
         >
-          Free & Open Source revolutionaries at CET - Building software freedom,
-          one commit at a time.
+          Building software freedom, one commit at a time.
         </p>
       </div>
     </section>
 
     <!-- Stats -->
-    <section class="relative overflow-hidden px-6 py-20">
+    <!-- <section class="relative overflow-hidden px-6 py-20">
       <div
-        class="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-cyan-500/5"
+        class="absolute inset-0 rounded-2xl border border-emerald-100/50 bg-emerald-500/5"
       >
       </div>
       <div class="relative mx-auto max-w-6xl">
@@ -101,7 +101,7 @@ import Layout from '@/layouts/Layout.astro'
             onclick="window.location.href = '/events'"
           >
             <div class="stat-number font-mono text-emerald-400" data-target="8">
-              0
+              1
             </div>
             <div
               class="mt-2 font-mono text-sm tracking-wider text-slate-500 uppercase dark:text-slate-400"
@@ -111,230 +111,104 @@ import Layout from '@/layouts/Layout.astro'
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- Mission -->
-    <section class="px-6 py-20">
+    <section class="pt-10 pb-15">
       <div class="mx-auto max-w-4xl">
-        <div class="fade-in mb-20 text-center">
-          <h2
-            class="mb-6 bg-gradient-to-r from-slate-200 to-slate-400 bg-clip-text text-4xl font-black md:text-5xl"
-          >
-            Our Mission
-          </h2>
-          <div
-            class="mx-auto h-1 w-24 rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400"
-          >
-          </div>
-        </div>
+        <h2 class="mb-10 text-2xl md:text-3xl">Our Mission</h2>
 
         <div class="grid items-center">
           <div class="fade-in space-y-6" style="transition-delay: 200ms">
-            <h3 class="mb-3 text-3xl font-bold">
-              <span class="text-primary">F</span>ree and <span
-                class="text-primary">O</span
-              >pen <span class="text-primary">S</span>ource <span
-                class="text-primary">S</span
-              >oftware
+            <h3 class="mb-3 text-xl leading-loose font-bold">
+              <span class="bg-primary text-primary-foreground px-2">Free</span
+              >&nbsp;and <br class="md:hidden" />
+              <span class="bg-primary text-primary-foreground px-2"
+                >Open Source</span
+              >
+              Software
             </h3>
-            <p
-              class="text-lg leading-relaxed text-slate-500 dark:text-slate-300"
-            >
-              We're bringing FOSS to CET students by replacing proprietary tools
-              with Linux, GitHub workflows, and community-driven development.
-              From kernel hacking to UI/UX contributions, we're building the
-              next generation of open source maintainers.
+            <p class="text-muted-foreground leading-relaxed">
+              We're bringing FOSS to CET students. We aim to replace proprietary
+              tools with open-source alternatives and community-driven
+              development. From kernel hacking to UI/UX contributions, we're
+              building the next generation of FOSS maintainers.
             </p>
           </div>
           <br />
           <div class="fade-in space-y-6" style="transition-delay: 200ms">
-            <h3 class="mt-5 mb-3 text-3xl font-bold">
-              Student Awareness and Software Responsibility
+            <h3 class="mt-12 mb-2 text-2xl font-bold">
+              Freedom, Awareness, and Responsibility
             </h3>
-            <p
-              class="text-lg leading-relaxed text-slate-500 dark:text-slate-300"
-            >
-              While addressing the FOSS movement, we also want to raise student
-              awareness and improve anti-piracy and unresponsible software usage
-              tendecies by providing free and open-source alternates.
+            <p class="text-muted-foreground leading-relaxed">
+              Our initiative promotes the FOSS movement as a gateway to digital
+              sovereignty. We encourage students to transition toward
+              open-source tools, fostering a culture of responsible software
+              usage that prioritizes user privacy over corporate slop and data
+              harvesting
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Header -->
-    <div class="mb-16 text-center">
-      <h1 class="mb-4 bg-clip-text text-5xl font-bold text-transparent">
-        <span class="text-primary"> The FOSS Movement </span>
-      </h1>
-    </div>
-
-    <!-- Timeline Container -->
-    <div class="relative">
-      <!-- Vertical Line -->
-      <div
-        class="absolute top-0 bottom-0 left-8 w-0.5 bg-gradient-to-b from-emerald-400 to-cyan-500"
-      >
+    <section class="pt-10 pb-15">
+      <div class="mx-auto max-w-4xl">
+        <h2 class="mb-10 text-2xl md:text-3xl">The Four Freedoms</h2>
+        <ol start="0" class="list-decimal pl-10 leading-loose text-pretty">
+          <li class="py-3">
+            The freedom to run the program as you wish, for any purpose.
+          </li>
+          <li class="py-3">
+            The freedom to study how the program works, and change it so it does
+            your computing as you wish.
+          </li>
+          <li class="py-3">
+            The freedom to redistribute copies so you can help others.
+          </li>
+          <li class="py-3">
+            The freedom to distribute copies of your modified versions to
+            others.
+          </li>
+        </ol>
       </div>
+    </section>
 
-      <!-- Timeline Items -->
-      <div class="space-y-12">
-        <!-- 1983-1985 -->
-        <div class="group relative flex items-center pl-16">
-          <!-- <div -->
-          <!--   class="bg-grey-500 absolute -left-12 flex h-16 w-16 items-center justify-center rounded-full text-xl font-bold text-white shadow-xl transition-all group-hover:scale-110" -->
-          <!-- > -->
-          <!--   <i class="fas fa-rocket"></i> -->
-          <!-- </div> -->
-          <div
-            class="ml-4 w-full rounded-2xl border border-slate-400 bg-slate-400/50 p-6 shadow-2xl backdrop-blur-sm dark:border-slate-800 dark:bg-slate-800/50"
-            style="transition: all 0.3s ease; transform: scale(1);"
-            onmouseover="this.style.transform='scale(1.05)'"
-            onmouseout="this.style.transform='scale(1)'"
-          >
-            <div class="mb-2 flex items-center" id="container">
-              <span class="font-mono text-2xl"
-                ><span class="text-primary">1983–1985</span></span
-              >
-              <div class="mx-3 h-2 w-2 rounded-full bg-emerald-400"></div>
-              <span class="text-sm text-slate-500 dark:text-slate-400"
-                >Global Foundations</span
-              >
-            </div>
-            <h3 class="mb-2 text-2xl font-bold">GNU Project & FSF</h3>
-            <p class="text-slate-500 dark:text-slate-300">
-              Richard Stallman launches GNU (1983) and Free Software Foundation
-              (1985), creates GPL license. Emacs also released as first product
-              under GNU License.
-            </p>
-          </div>
+    <section class="pt-10 pb-15">
+      <h2 class="mb-16 text-2xl md:text-3xl">The&nbsp;FOSS&nbsp;Movement</h2>
+      <div class="relative mb-20">
+        <!-- Vertical Line -->
+        <div class="from-primary bg-border absolute top-0 bottom-0 left-4 w-px">
         </div>
 
-        <!-- 1991-1993 -->
-        <div class="group relative flex items-center pl-16">
-          <!-- <div -->
-          <!--   class="bg-grey-500 absolute -left-12 flex h-16 w-16 items-center justify-center rounded-full text-xl font-bold text-white shadow-xl transition-all group-hover:scale-110" -->
-          <!-- > -->
-          <!--   <i class="fab fa-linux"></i> -->
-          <!-- </div> -->
-          <div
-            class="ml-4 w-full rounded-2xl border border-slate-400 bg-slate-400/50 p-6 shadow-2xl backdrop-blur-sm dark:border-slate-800 dark:bg-slate-800/50"
-            style="transition: all 0.3s ease; transform: scale(1);"
-            onmouseover="this.style.transform='scale(1.05)'"
-            onmouseout="this.style.transform='scale(1)'"
-          >
-            <div class="mb-2 flex items-center">
-              <span class="font-mono text-2xl"
-                ><span class="text-primary">1991–1993</span></span
-              >
-              <div class="mx-3 h-2 w-2 rounded-full bg-emerald-400"></div>
-              <span class="text-sm text-slate-500 dark:text-slate-400"
-                >Kernel Boom</span
-              >
-            </div>
-            <h3 class="mb-2 text-2xl font-bold">Linux Kernel Released</h3>
-            <p class="text-slate-500 dark:text-slate-300">
-              Linus Torvalds releases Linux kernel (1991); BSD variants gain
-              traction post-lawsuits.
-            </p>
-          </div>
-        </div>
-
-        <!-- 1998 -->
-        <div class="group relative flex items-center pl-16">
-          <!-- <div -->
-          <!--   class="bg-grey-500 absolute -left-12 flex h-16 w-16 items-center justify-center rounded-full text-xl font-bold text-white shadow-xl transition-all group-hover:scale-110" -->
-          <!-- > -->
-          <!--   <i class="fas fa-globe"></i> -->
-          <!-- </div> -->
-          <div
-            class="ml-4 w-full rounded-2xl border border-slate-400 bg-slate-400/50 p-6 shadow-2xl backdrop-blur-sm dark:border-slate-800 dark:bg-slate-800/50"
-            style="transition: all 0.3s ease; transform: scale(1);"
-            onmouseover="this.style.transform='scale(1.05)'"
-            onmouseout="this.style.transform='scale(1)'"
-          >
-            <div class="mb-2 flex items-center">
-              <span class="font-mono text-2xl"
-                ><span class="text-primary">1998</span></span
-              >
-              <div class="mx-3 h-2 w-2 rounded-full bg-emerald-400"></div>
-              <span class="text-sm text-slate-500 dark:text-slate-400"
-                >Term Coined</span
-              >
-            </div>
-            <h3 class="mb-2 text-2xl font-bold">"Open Source" is Born</h3>
-            <p class="text-slate-500 dark:text-slate-300">
-              Term coined for broader appeal; Apache/Red Hat commercialize FOSS.
-            </p>
-          </div>
-        </div>
-
-        <!-- 2000-2001 India -->
-        <div class="group relative flex items-center pl-16">
-          <!-- <div -->
-          <!--   class="bg-grey-500 absolute -left-12 flex h-16 w-16 items-center justify-center rounded-full text-xl font-bold text-white shadow-xl transition-all group-hover:scale-110" -->
-          <!-- > -->
-          <!--   <i class="fas fa-flag"></i> -->
-          <!-- </div> -->
-          <div
-            class="ml-4 w-full rounded-2xl border border-slate-400 bg-slate-400/50 p-6 shadow-2xl backdrop-blur-sm dark:border-slate-800 dark:bg-slate-800/50"
-            style="transition: all 0.3s ease; transform: scale(1);"
-            onmouseover="this.style.transform='scale(1.05)'"
-            onmouseout="this.style.transform='scale(1)'"
-          >
-            <div class="mb-2 flex items-center">
-              <span class="font-mono text-2xl text-orange-400"
-                ><span class="text-primary">2000-2001</span></span
-              >
-              <div class="mx-3 h-2 w-2 rounded-full bg-emerald-400"></div>
-              <span class="text-sm text-slate-500 dark:text-slate-400"
-                >India Awakens</span
-              >
-            </div>
-            <h3 class="mb-2 text-2xl font-bold">Kerala Leads</h3>
-            <p class="text-slate-500 dark:text-slate-300">
-              Kerala's IT@School promotes FOSS education; FSF India starts in
-              Trivandrum.
-            </p>
-          </div>
-        </div>
-
-        <!-- 2025-2026 -->
-        <div class="group relative flex items-center pl-16">
-          <!-- <div -->
-          <!--   class="absolute -left-12 flex h-16 w-16 items-center justify-center rounded-full text-xl font-bold text-white shadow-xl transition-all group-hover:scale-110" -->
-          <!-- > -->
-          <!--   <i class="fas fa-users"></i> -->
-          <!-- </div> -->
-          <div
-            class="ml-4 w-full rounded-2xl border-2 border-emerald-500/50 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 p-8 shadow-2xl backdrop-blur-sm"
-            style="transition: all 0.3s ease; transform: scale(1);"
-            onmouseover="this.style.transform='scale(1.05)'"
-            onmouseout="this.style.transform='scale(1)'"
-          >
-            <div class="mb-3 flex items-center">
-              <span class="font-mono text-2xl text-emerald-400">2025–2026</span>
-              <div class="mx-3 h-2 w-2 rounded-full bg-emerald-400"></div>
-              <span class="text-sm text-slate-500 dark:text-slate-400"
-                >FOSS@CET</span
-              >
-            </div>
-
-            <h3
-              class="mb-3 bg-gradient-to-r from-white to-slate-200 bg-clip-text text-3xl font-black"
-            >
-              <span class="italic"
-                >foss<span class="text-primary">cet</span></span
-              > is launched
-            </h3>
-            <p class="text-slate-500 dark:text-slate-300">
-              The FOSS movement is brought back to our very own CET, stronger
-              than ever.
-            </p>
-          </div>
+        <!-- Timeline Items -->
+        <div class="space-y-12">
+          <TimelineCard
+            year="1983"
+            title="The GNU Project and FSF"
+            text="Richard Stallman launches GNU (1983) and the Free Software Foundation (1985), creates GPL license. Emacs also released as first product under GNU License."
+            fancy={false}
+          />
+          <TimelineCard
+            year="1991"
+            title="Linux Kernel Released"
+            text="Linus Torvalds releases Linux kernel (1991); BSD variants gain traction post-lawsuits. "
+            fancy={false}
+          />
+          <TimelineCard
+            year="2001"
+            title="Kerala Leads"
+            text="Kerala's IT@School (now KITE) promotes FOSS education; FSF India starts in Trivandrum. "
+            fancy={false}
+          />
+          <TimelineCard
+            year="2026"
+            title="FOSSCET is launched"
+            text="The FOSS movement is brought back to our very own CET, stronger than ever."
+            fancy={true}
+          />
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </Layout>

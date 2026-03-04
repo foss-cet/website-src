@@ -1,0 +1,4 @@
+- intro to clubs
+- personal intro, blogs etc
+- freeform teams announcement
+- ideas for first event
