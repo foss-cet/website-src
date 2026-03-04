@@ -18,7 +18,7 @@ import logo from '../../public/static/logo.svg'
         src={logo}
         alt="Logo"
         id="navbar-logo"
-        class="size-8 transition-all duration-300 md:size-12 md:saturate-100"
+        class="size-8 opacity-0 transition-all duration-300 md:size-12 md:saturate-100"
       />
       <span
         class="hidden h-full py-4 font-mono leading-none font-medium italic md:block md:text-3xl"
@@ -46,32 +46,28 @@ import logo from '../../public/static/logo.svg'
 </div>
 
 <script>
-  const target = document.querySelector('#scroll-trigger')
-  const nav = document.querySelector('#navbar') as HTMLDivElement
-  const logo = document.querySelector('#navbar-logo') as HTMLImageElement
+  const initNavbarObserver = () => {
+    const target = document.querySelector('#scroll-trigger')
+    const nav = document.querySelector('#navbar') as HTMLDivElement
+    const logo = document.querySelector('#navbar-logo') as HTMLImageElement
 
-  if (!target) {
-    console.error(
-      "Observer Error: Target element '#scroll-trigger' not found in DOM.",
-    )
-  } else {
+    if (!target) {
+      console.error(
+        "Observer Error: Target element '#scroll-trigger' not found in DOM.",
+      )
+      return
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          console.log('Intersection Ratio:', entry.intersectionRatio)
-          console.log('Is Intersecting?:', entry.isIntersecting)
-
           if (!entry.isIntersecting) {
-            console.log('Trigger hit the top (Exited viewport)')
             document.querySelector('#main-nav')?.classList.add('is-at-top')
             logo.classList.remove('opacity-0', 'scale-0', 'w-0')
-            nav.style.marginLeft = '0'
             nav.style.justifyContent = 'space-between'
           } else {
-            console.log('Trigger is back in view')
             document.querySelector('#main-nav')?.classList.remove('is-at-top')
             logo.classList.add('opacity-0', 'scale-0', 'w-0')
-            nav.style.marginLeft = '-1rem'
             nav.style.justifyContent = 'center'
           }
         })
@@ -81,4 +77,7 @@ import logo from '../../public/static/logo.svg'
 
     observer.observe(target)
   }
+
+  window.addEventListener('load', initNavbarObserver)
+  document.addEventListener('astro:page-load', initNavbarObserver)
 </script>
