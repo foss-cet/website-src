@@ -3,7 +3,7 @@ import type { IconMap, SocialLink, Site } from '@/types'
 export const SITE: Site = {
   title: 'FOSSCET',
   description:
-    "We are a community of hackers, builders, and privacy advocates dedicated to Free and Open Source Software.",
+    'We are a community of hackers, builders, and privacy advocates dedicated to Free and Open Source Software.',
   href: 'https://fosscet.codeberg.page/',
   author: 'fosscet',
   locale: 'en-US',
@@ -48,6 +48,7 @@ export const ICON_MAP: IconMap = {
   Codeberg: 'lucide:mountain-snow',
   GitHub: 'lucide:github',
   LinkedIn: 'lucide:linkedin',
+  Instagram: 'lucide:instagram',
   Twitter: 'lucide:twitter',
   Email: 'lucide:mail',
   RSS: 'lucide:rss',

@@ -5,21 +5,27 @@ import PageHead from '@/components/PageHead.astro'
 import Layout from '@/layouts/Layout.astro'
 import { getAllMembers } from '@/lib/data-utils'
 
-const members = await getAllMembers()
+const members = (await getAllMembers()).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name),
+)
 ---
 
-<Layout class="max-w-3xl">
+<Layout class="max-w-4xl">
   <PageHead slot="head" title="Members" />
+
   <Breadcrumbs items={[{ label: 'Members', icon: 'lucide:users' }]} />
+  <div class="border-border text-muted-foreground rounded-2xl border p-4">
+    <strong>Viewer discretion advised.</strong>
+    <br /> Members have the freedom to customise their profiles. Some of us actually
+    exercise it.
+  </div>
   {
     members.length > 0 ? (
-      <ul class="flex flex-col gap-4">
+      <div class="flex flex-wrap justify-center gap-4">
         {members.map((member) => (
-          <li>
-            <MemberCard member={member} />
-          </li>
+          <MemberCard member={member} />
         ))}
-      </ul>
+      </div>
     ) : (
       <p class="text-muted-foreground text-center">No members found.</p>
     )

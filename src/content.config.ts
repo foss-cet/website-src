@@ -44,6 +44,7 @@ const members = defineCollection({
     codeberg: z.string().url().optional(),
     linkedin: z.string().url().optional(),
     discord: z.string().url().optional(),
+    instagram: z.string().url().optional(),
   }),
 })
 

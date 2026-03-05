@@ -22,13 +22,17 @@ const socialLinks: SocialLink[] = [
   member.data.twitter && { href: member.data.twitter, label: 'Twitter' },
   member.data.linkedin && { href: member.data.linkedin, label: 'LinkedIn' },
   member.data.mail && { href: `mailto:${member.data.mail}`, label: 'Email' },
+  member.data.instagram && {
+    href: `mailto:${member.data.instagram}`,
+    label: 'Instagram',
+  },
 ].filter(Boolean) as SocialLink[]
 ---
 
 <div
-  class="has-[a:hover]:bg-muted/50 overflow-hidden rounded-xl border p-4 transition-colors duration-300 ease-in-out"
+  class="has-[a:hover]:bg-muted/50 w-64 overflow-hidden rounded-xl border p-4 transition-colors duration-300 ease-in-out"
 >
-  <div class="flex flex-wrap gap-4">
+  <div class="flex flex-col items-center gap-4">
     <Link
       href={`/members/${member.id}`}
       class={cn('block', isAuthorPage && 'pointer-events-none')}
@@ -39,23 +43,27 @@ const socialLinks: SocialLink[] = [
         alt={`Avatar of ${name}`}
         fallback={name[0]}
         className={cn(
-          '.:data-[slot="avatar-fallback"]:rounded-md size-32 rounded-md',
+          '.:data-[slot="avatar-fallback"]:rounded-md size-32 rounded-lg',
           !isAuthorPage &&
             'hover:ring-primary transition-shadow duration-300 hover:cursor-pointer hover:ring-2',
         )}
       />
     </Link>
-    <div class="flex grow flex-col justify-between gap-y-4">
+    <div
+      class="flex grow flex-col items-center justify-between gap-y-4 text-center"
+    >
       <div>
-        <div class="flex flex-wrap items-center gap-x-2">
+        <div class="flex flex-col items-center gap-x-2">
           <h3 class="text-lg font-medium">{name}</h3>
           {
             pronouns && (
-              <span class="text-muted-foreground text-sm">({pronouns})</span>
+              <span class="text-muted-foreground font-mono text-xs">
+                {pronouns}
+              </span>
             )
           }
         </div>
-        <p class="text-muted-foreground text-sm">{bio}</p>
+        <p class="text-muted-foreground mt-3 leading-relaxed">{bio}</p>
       </div>
       <SocialIcons links={socialLinks} />
     </div>
