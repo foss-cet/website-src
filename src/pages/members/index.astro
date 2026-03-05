@@ -14,10 +14,19 @@ const members = (await getAllMembers()).sort((a, b) =>
   <PageHead slot="head" title="Members" />
 
   <Breadcrumbs items={[{ label: 'Members', icon: 'lucide:users' }]} />
-  <div class="border-border text-muted-foreground rounded-2xl border p-4">
+  <div class="border-border text-muted-foreground prose rounded-2xl border p-4">
     <strong>Viewer discretion advised.</strong>
     <br /> Members have the freedom to customise their profiles. Some of us actually
     exercise it.
+    <br />
+    <br class="md:hidden" />
+
+    Open a pull request <a
+      href="https://codeberg.org/fosscet/website-src/"
+      class="link"
+    >
+      on the repo
+    </a> to add your profile.
   </div>
   {
     members.length > 0 ? (
