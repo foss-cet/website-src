@@ -1,7 +1,7 @@
 ---
 name: 'neverneeth'
 pronouns: 'if/else'
-avatar: 'https://i.imgflip.com/p0a19.jpg'
+avatar: 'https://cdn2.cdnstep.com/wW75zsnn8OElS17faFmZ/4.thumb128.png'
 bio: 'i inhale maggie masala'
 github: 'https://github.com/neverneeth'
 linkedin: 'https://linkedin.com/in/navaneeth-v-sankar'
