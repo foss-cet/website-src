@@ -2,7 +2,7 @@
 name: 'soorzj'
 pronouns: 'hi'
 avatar: 'https://avatars.githubusercontent.com/u/166585708?v=4'
-bio: "gg ez"
+bio: "kaatakada opensource mill itta mohannan"
 website: 'https://soorzj.github.io/'
 github: 'https://github.com/soorzj'
 codeberg: 'https://codeberg.org/soorzj'
