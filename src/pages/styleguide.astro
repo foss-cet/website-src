@@ -1,0 +1,136 @@
+---
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import ColorSwatch from '@/components/ColorSwatch.astro'
+import PageHead from '@/components/PageHead.astro'
+import Layout from '@/layouts/Layout.astro'
+---
+
+<Layout class="max-w-3xl">
+  <PageHead slot="head" title="Assets and Style Guide" />
+  <Breadcrumbs
+    items={[{ label: 'Assets and Style Guide', icon: 'lucide:palette' }]}
+  />
+  <article class="prose mx-auto mt-6 flex w-full max-w-4xl flex-col gap-6">
+    <h1>Assets and Style Guide</h1>
+
+    <section>
+      <h2>Logo</h2>
+      <img src="/static/logo.svg" alt="Logo" height={200} class="h-20" />
+      <ul>
+        <li>
+          <a href="/staic/logo.svg" download="fosscet-logo.svg">
+            SVG, logo only
+          </a>
+        </li>
+        <li>
+          <a
+            href="/static/web-app-manifest-192x192.png"
+            download="fosscet-logo-192.svg"
+          >
+            PNG 192x192, logo only
+          </a>
+        </li>
+
+        <li>
+          <a
+            href="/static/web-app-manifest-512x512.png"
+            download="fosscet-logo-512.svg"
+          >
+            PNG 512x512, logo only
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Logo and Word Mark</h2>
+      <img
+        src="/static/1200x630.png"
+        alt="Logo and word mark"
+        height={200}
+        class="h-30"
+      />
+      <ul>
+        <li>
+          <a href="/static/1200x630.png" download="fosscet-logo-wordmark.png">
+            PNG 1200x630, logo and word mark
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Fonts</h2>
+
+      <div
+        class="grid grid-cols-1 items-center justify-center gap-x-8 gap-y-4 md:grid-cols-2 md:gap-y-8"
+      >
+        <div
+          class="border-border from-primary/10 to-primary/2 flex h-full items-center justify-center rounded border bg-linear-to-bl px-6 py-2 text-center font-mono text-4xl"
+        >
+          0xProto
+        </div>
+        <p>
+          Tailwind class <code>font-mono</code>.
+          <br />
+          Use for headings, code blocks, and aesthetic details.
+          <br />
+          Download from <a href="https://github.com/0xType/0xProto/releases">
+            GitHub: 0xType/0xProto
+          </a>
+        </p>
+        <div
+          class="border-border flex h-full items-center justify-center rounded border px-6 py-2 text-center font-sans text-4xl"
+        >
+          Geist
+        </div>
+        <p>
+          Tailwind class <code>font-sans</code>.
+          <br />
+          Use for text everywhere else.
+          <br />
+          Download from <a href="https://fonts.google.com/specimen/Geist">
+            Google Fonts: Geist
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10">
+      <h2>Colours</h2>
+      <p>
+        General guidelines:
+        <ul>
+          <li>
+            Use the <code>primary</code> colour sparingly, for design elements and
+            accents. Avoid using it for text.
+          </li>
+          <li>
+            Use <code>foreground</code> for headings, navigation elements, and text
+            that stands out.
+          </li>
+          <li>
+            Use <code>muted-foreground</code> for paragraphs.
+          </li>
+        </ul>
+      </p>
+      <div class="flex flex-1 flex-col gap-4 md:flex-row">
+        <ColorSwatch
+          color="primary"
+          class="bg-primary text-primary-foreground"
+        />
+
+        <ColorSwatch color="foreground" class="bg-foreground text-background" />
+
+        <ColorSwatch
+          color="muted-foreground"
+          class="bg-muted-foreground text-muted"
+        />
+
+        <ColorSwatch color="muted" class="bg-muted text-muted-foreground" />
+
+        <ColorSwatch color="background" class="bg-background text-foreground" />
+      </div>
+    </section>
+  </article>
+</Layout>

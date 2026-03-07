@@ -1,0 +1,49 @@
+---
+import { cn } from '@/lib/utils'
+
+interface Props {
+  class?: string
+  color: string
+  [key: string]: any
+}
+
+const { color: colorName, class: className, ...rest } = Astro.props
+---
+
+<button
+  class={cn(
+    'cursor-pointer bg-primary text-primary-foreground border-border border flex min-h-20  w-full items-center justify-center rounded font-mono text-sm font-bold',
+    className,
+  )}
+  {...rest}
+  title={'Click to copy: ' + colorName}
+  data-color={colorName}
+  data-color-swatch
+>
+  <span>{colorName}</span>
+</button>
+
+<script>
+  const initClipboard = () => {
+    const buttons = document.querySelectorAll(
+      '[data-color-swatch]',
+    ) as NodeListOf<HTMLButtonElement>
+
+    buttons.forEach((button) => {
+      const color = button?.dataset.color as string
+      button?.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(color)
+          button.innerText = 'Copied!'
+          setTimeout(() => {
+            button.innerText = color
+          }, 1000)
+        } catch (err) {
+          console.error('Error copying to clipboard.', err)
+        }
+      })
+    })
+  }
+
+  document.addEventListener('astro:page-load', initClipboard)
+</script>
