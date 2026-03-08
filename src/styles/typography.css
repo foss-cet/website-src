@@ -19,6 +19,10 @@
     @apply text-muted-foreground font-mono;
   }
 
+  h1 {
+    word-spacing: -0.35rem;
+  }
+
   h2::before {
     content: '> ';
     /*margin-left: -2ch;*/
