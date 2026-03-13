@@ -26,6 +26,11 @@ export async function getAllEvents(): Promise<CollectionEntry<'events'>[]> {
   return events.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 }
 
+export async function getAllForms(): Promise<CollectionEntry<'forms'>[]> {
+  const forms = await getCollection('forms')
+  return forms.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+}
+
 export function groupEventsByYear(
   events: CollectionEntry<'events'>[],
 ): Record<string, CollectionEntry<'events'>[]> {

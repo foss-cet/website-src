@@ -48,6 +48,42 @@ const members = defineCollection({
   }),
 })
 
+const forms = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/forms' }),
+  schema: () =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      date: z.coerce.date(),
+      // sqlite-safe
+      id: z.string().regex(/^[a-zA-Z0-9_]+$/, {
+        message:
+          "Form 'id' can only contain letters, numbers, and underscores.",
+      }),
+      submit_text: z.string().default('Submit'),
+      form: z.object({
+        submit_text: z.string().default('Submit'),
+        fields: z
+          .array(
+            z.object({
+              id: z.string().regex(/^[a-zA-Z0-9_]+$/, {
+                message:
+                  "Field 'name' can only contain letters, numbers, and underscores.",
+              }),
+              label: z.string(),
+              type: z
+                .enum(['text', 'email', 'number', 'textarea', 'tel', 'url'])
+                .default('text'),
+              required: z.boolean().default(false),
+            }),
+          )
+          .min(1, {
+            message: 'A form must have at least one field defined.',
+          }),
+      }),
+    }),
+})
+
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
   schema: ({ image }) =>
@@ -62,4 +98,4 @@ const projects = defineCollection({
     }),
 })
 
-export const collections = { events, blog, members, projects }
+export const collections = { events, blog, members, projects, forms }

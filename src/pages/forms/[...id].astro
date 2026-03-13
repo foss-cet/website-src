@@ -1,0 +1,68 @@
+---
+import { FORM_POST_URL } from '@/consts'
+import Layout from '@/layouts/Layout.astro'
+import { getAllForms } from '@/lib/data-utils'
+
+export async function getStaticPaths() {
+  const forms = await getAllForms()
+  return forms.map((form) => ({
+    params: { id: form.id },
+    props: form,
+  }))
+}
+
+const form = Astro.props.data
+const fields = Astro.props.data.form.fields
+---
+
+<Layout>
+  <section
+    class="border-border mx-auto flex w-full max-w-3xl flex-col items-center gap-y-6 rounded-xl border p-8"
+  >
+    <form
+      action={`${FORM_POST_URL}${form.id}`}
+      method="POST"
+      class="flex w-full flex-col items-start gap-12"
+    >
+      <h1 class="w-full text-center text-3xl">
+        {form.title}
+      </h1>
+
+      {
+        fields.map((field) => (
+          <div class="flex w-full flex-col gap-2">
+            <label for={field.id} class="text-muted-foreground pl-1">
+              {field.label}
+            </label>
+
+            {field.type === 'textarea' ? (
+              <textarea
+                id={field.id}
+                name={field.id}
+                required={field.required}
+                rows="4"
+                class="border-border rounded-xl border px-4 py-2"
+              />
+            ) : (
+              <input
+                type={field.type || 'text'}
+                id={field.id}
+                name={field.id}
+                required={field.required}
+                class="border-border rounded-xl border px-4 py-2"
+              />
+            )}
+          </div>
+        ))
+      }
+
+      <div class="flex w-full justify-end">
+        <button
+          type="submit"
+          class="bg-primary text-primary-foreground rounded-lg px-4 py-2 font-sans text-lg font-bold"
+          >{form.submit_text || 'Submit'}</button
+        >
+      </div>
+    </form>
+  </section>
+</Layout>

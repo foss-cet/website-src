@@ -13,6 +13,8 @@ export const SITE: Site = {
   eventsPerPage: 3,
 }
 
+export const FORM_POST_URL = 'https://fosscet-forms.val.run/'
+
 export const NAV_LINKS: SocialLink[] = [
   {
     href: '/blog',
