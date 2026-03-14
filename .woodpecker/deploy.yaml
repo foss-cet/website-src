@@ -24,6 +24,8 @@ steps:
       # 5. Commit and push
       - cd ../pages
       - git add .
+      - git add .
       # The '|| echo' prevents the pipeline from failing if there are no changes to commit
-      - git diff-index --quiet HEAD || git commit -m "chore: deploy site update - $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+      - |
+        git diff-index --quiet HEAD || git commit -m "chore: deploy site update - $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
       - git push https://$CODEBERG_TOKEN@codeberg.org/fosscet/pages.git pages
