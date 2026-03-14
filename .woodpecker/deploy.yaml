@@ -1,7 +1,9 @@
 steps:
   build-and-deploy:
     image: oven/bun:alpine
-    secrets: [ codeberg_token ]
+    environment:
+      CODEBERG_TOKEN:
+        from_secret: codeberg_token
     commands:
       # 1. Install git and configure CI user
       - apk add --no-cache git
