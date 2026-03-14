@@ -1,0 +1,29 @@
+steps:
+  build-and-deploy:
+    image: oven/bun:alpine
+    secrets: [ codeberg_token ]
+    commands:
+      # 1. Install git and configure CI user
+      - apk add --no-cache git
+      - git config --global user.name "Woodpecker CI"
+      - git config --global user.email "ci@foss.cet.ac.in" # Update this to your preferred email
+      
+      # 2. Clone the pages repo into a neighboring directory
+      # Using the token for authentication
+      - git clone -b pages https://$CODEBERG_TOKEN@codeberg.org/fosscet/pages.git ../pages
+      
+      # 3. Build the site
+      - bun install
+      - bun run build
+      
+      # 4. Clean old files in the pages repo (so deleted source files are removed from the live site) and copy new ones
+      # We use 'find' to delete everything except the .git folder
+      - find ../pages -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+      - cp -a build/. ../pages/
+      
+      # 5. Commit and push
+      - cd ../pages
+      - git add .
+      # The '|| echo' prevents the pipeline from failing if there are no changes to commit
+      - git diff-index --quiet HEAD || git commit -m "chore: deploy site update - $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+      - git push https://$CODEBERG_TOKEN@codeberg.org/fosscet/pages.git pages
