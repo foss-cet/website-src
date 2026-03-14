@@ -9,5 +9,5 @@ instagram: 'https://instagram.com/joel.shine007'
 linkedin: 'https://www.linkedin.com/in/joel-shine-478979374/'
 ---
 
-> _“That’s a bingo!”_   
+> _“Thats a bingo!”_   
 > <cite> ~ Hans Landa </cite>
