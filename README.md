@@ -64,8 +64,11 @@ This can be considerably longer than the `bio` field in the frontmatter.
 
 You need the following installed to get started:
 
-- [Node.js](https://nodejs.org/en)  
-- [pnpm](https://pnpm.io) or [bun](https://bun.sh)
+- [Node.js](https://nodejs.org/en)  and [pnpm](https://pnpm.io)
+
+OR 
+
+- [bun](https://bun.sh)
 
 
 ### Clone and set up the repo
