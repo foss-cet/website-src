@@ -1,6 +1,6 @@
 ---
 title: "Interim Execom Recruitment"
-id: "interim-execom-call-2026"
+id: "interim_execom_call_2026"
 description: "Recruitment form for FOSS-CET's interim executive committee"
 date: 2026-03-15
 form:
