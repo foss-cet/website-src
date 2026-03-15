@@ -1,7 +1,10 @@
 ---
+import FormField from '@/components/FormField.astro'
 import { FORM_POST_URL } from '@/consts'
 import Layout from '@/layouts/Layout.astro'
 import { getAllForms } from '@/lib/data-utils'
+import { formatDate } from '@/lib/utils'
+import { render } from 'astro:content'
 
 export async function getStaticPaths() {
   const forms = await getAllForms()
@@ -11,50 +14,36 @@ export async function getStaticPaths() {
   }))
 }
 
+const { Content } = await render(Astro.props)
 const form = Astro.props.data
 const fields = Astro.props.data.form.fields
 ---
 
 <Layout>
   <section
-    class="border-border mx-auto flex w-full max-w-3xl flex-col items-center gap-y-6 rounded-xl border p-8"
+    class="border-border mx-auto flex w-full max-w-3xl flex-col items-center gap-y-2 rounded-xl border p-8"
   >
+    <h1
+      class="mb-2 w-full scroll-mt-31 text-center text-3xl leading-tight font-medium sm:text-4xl"
+    >
+      {form.title}
+    </h1>
+    <div
+      class="text-muted-foreground mb-4 mb-6 flex w-fit py-2 text-xs sm:px-2 sm:py-0 sm:text-sm"
+    >
+      <span>{formatDate(form.date)}</span>
+    </div>
+
+    <article class="prose w-full">
+      <Content />
+    </article>
+
     <form
       action={`${FORM_POST_URL}${form.id}`}
       method="POST"
       class="flex w-full flex-col items-start gap-12"
     >
-      <h1 class="w-full text-center text-3xl">
-        {form.title}
-      </h1>
-
-      {
-        fields.map((field) => (
-          <div class="flex w-full flex-col gap-2">
-            <label for={field.id} class="text-muted-foreground pl-1">
-              {field.label}
-            </label>
-
-            {field.type === 'textarea' ? (
-              <textarea
-                id={field.id}
-                name={field.id}
-                required={field.required}
-                rows="4"
-                class="border-border rounded-xl border px-4 py-2"
-              />
-            ) : (
-              <input
-                type={field.type || 'text'}
-                id={field.id}
-                name={field.id}
-                required={field.required}
-                class="border-border rounded-xl border px-4 py-2"
-              />
-            )}
-          </div>
-        ))
-      }
+      {fields.map((field) => <FormField field={field} />)}
 
       <div class="flex w-full justify-end">
         <button

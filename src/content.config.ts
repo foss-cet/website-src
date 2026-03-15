@@ -72,8 +72,19 @@ const forms = defineCollection({
               }),
               label: z.string(),
               type: z
-                .enum(['text', 'email', 'number', 'textarea', 'tel', 'url'])
+                .enum([
+                  'text',
+                  'email',
+                  'number',
+                  'textarea',
+                  'tel',
+                  'url',
+                  'select',
+                  'checkbox',
+                  'radio',
+                ])
                 .default('text'),
+              options: z.array(z.string()).optional(),
               required: z.boolean().default(false),
             }),
           )
