@@ -2,17 +2,19 @@
 import Link from '@/components/Link.astro'
 import { buttonVariants } from '@/components/ui/button'
 import { ICON_MAP } from '@/consts'
+import { cn } from '@/lib/utils'
 import type { SocialLink } from '@/types'
 import { Icon } from 'astro-icon/components'
 
 interface Props {
   links: SocialLink[]
+  class?: string
 }
 
-const { links } = Astro.props
+const { links, class: classNames } = Astro.props
 ---
 
-<ul class="flex flex-col flex-wrap gap-2" role="list">
+<ul class={cn('flex flex-wrap gap-2', classNames)} role="list">
   {
     links.map(({ href, label }) => (
       <li>
