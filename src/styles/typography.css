@@ -19,14 +19,15 @@
     @apply text-muted-foreground font-mono;
   }
 
-  h1 {
+  h1,
+  h2 {
     word-spacing: -0.35rem;
   }
 
   h2::before {
-    content: '> ';
+    content: '⡦ ';
     /*margin-left: -2ch;*/
-    @apply text-primary opacity-55;
+    @apply text-primary relative bottom-[0.3ch] opacity-80;
   }
 
   h1,
