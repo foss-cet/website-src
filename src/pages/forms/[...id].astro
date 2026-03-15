@@ -4,6 +4,7 @@ import { FORM_POST_URL } from '@/consts'
 import Layout from '@/layouts/Layout.astro'
 import { getAllForms } from '@/lib/data-utils'
 import { formatDate } from '@/lib/utils'
+import { Icon } from 'astro-icon/components'
 import { render } from 'astro:content'
 
 export async function getStaticPaths() {
@@ -29,7 +30,7 @@ const fields = Astro.props.data.form.fields
       {form.title}
     </h1>
     <div
-      class="text-muted-foreground mb-4 mb-6 flex w-fit py-2 text-xs sm:px-2 sm:py-0 sm:text-sm"
+      class="text-muted-foreground mb-6 flex w-fit py-2 text-xs sm:px-2 sm:py-0 sm:text-sm"
     >
       <span>{formatDate(form.date)}</span>
     </div>
@@ -40,18 +41,92 @@ const fields = Astro.props.data.form.fields
 
     <form
       action={`${FORM_POST_URL}${form.id}`}
+      data-form-id={form.id}
       method="POST"
       class="flex w-full flex-col items-start gap-12"
     >
       {fields.map((field) => <FormField field={field} />)}
+      <div class="flex w-full items-center justify-end gap-4">
+        <span
+          id="save-indicator"
+          class="text-muted-foreground ext-sm flex items-center justify-center gap-2 opacity-0 transition-opacity duration-300"
+        >
+          <Icon name="lucide:check" class="text-primary" />
+          Draft autosaved
+        </span>
 
-      <div class="flex w-full justify-end">
+        <!-- Click again to confirm clear.  -->
+        <button
+          type="button"
+          onclick="if(this.textContent==='Confirm?') { this.form.reset(); this.textContent='Clear'; this.classList.replace('bg-destructive', 'bg-muted'); } else { this.textContent='Confirm?'; this.classList.replace('bg-muted', 'bg-destructive'); this.classList.add('text-destructive-foreground'); }"
+          onblur="this.textContent='Clear'; this.classList.replace('bg-destructive', 'bg-muted'); this.classList.remove('text-destructive-foreground');"
+          class="bg-muted text-foreground rounded-lg px-4 py-2 font-sans text-lg font-bold transition-all duration-200"
+        >
+          Clear
+        </button>
         <button
           type="submit"
           class="bg-primary text-primary-foreground rounded-lg px-4 py-2 font-sans text-lg font-bold"
-          >{form.submit_text || 'Submit'}</button
         >
+          {form.submit_text || 'Submit'}
+        </button>
       </div>
     </form>
   </section>
+
+  <script>
+    const setupAutosave = () => {
+      const form = document.querySelector<HTMLFormElement>('form[data-form-id]')
+      const indicator = document.getElementById('save-indicator')
+      if (!form) return
+
+      const storageKey = `autosave-form-${form.dataset.formId}`
+      let saveTimeout: ReturnType<typeof setTimeout>
+
+      // load saved data on mount
+      const savedData = JSON.parse(localStorage.getItem(storageKey) || '{}')
+
+      Object.entries(savedData).forEach(([name, value]) => {
+        const inputs = form.querySelectorAll(`[name="${name}"]`)
+        inputs.forEach((input: any) => {
+          if (input.type === 'checkbox' || input.type === 'radio') {
+            input.checked = Array.isArray(value)
+              ? value.includes(input.value)
+              : input.value === value
+          } else {
+            input.value = value
+          }
+        })
+      })
+
+      // save data to localStorage on any input change
+      form.addEventListener('input', () => {
+        const formData = new FormData(form)
+        const data: Record<string, any> = {}
+
+        for (const [key, value] of formData.entries()) {
+          if (data[key]) {
+            data[key] = [].concat(data[key], value as any)
+          } else {
+            data[key] = value
+          }
+        }
+
+        localStorage.setItem(storageKey, JSON.stringify(data))
+
+        // show the "Draft saved" indicator
+        if (indicator) {
+          indicator.classList.remove('opacity-0')
+        }
+      })
+
+      // clear localStorage on submit
+      form.addEventListener('submit', () => {
+        localStorage.removeItem(storageKey)
+      })
+    }
+
+    document.addEventListener('DOMContentLoaded', setupAutosave)
+    document.addEventListener('astro:page-load', setupAutosave)
+  </script>
 </Layout>
