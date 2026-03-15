@@ -23,7 +23,7 @@ const socialLinks: SocialLink[] = [
   member.data.linkedin && { href: member.data.linkedin, label: 'LinkedIn' },
   member.data.mail && { href: `mailto:${member.data.mail}`, label: 'Email' },
   member.data.instagram && {
-    href: `mailto:${member.data.instagram}`,
+    href: member.data.instagram,
     label: 'Instagram',
   },
 ].filter(Boolean) as SocialLink[]
