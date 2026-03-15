@@ -46,10 +46,12 @@ const fields = Astro.props.data.form.fields
       class="flex w-full flex-col items-start gap-12"
     >
       {fields.map((field) => <FormField field={field} />)}
-      <div class="flex w-full items-center justify-end gap-4">
+      <div
+        class="ml-auto grid w-full grid-cols-2 items-center justify-end gap-4 md:w-auto md:grid-cols-3"
+      >
         <span
           id="save-indicator"
-          class="text-muted-foreground ext-sm flex items-center justify-center gap-2 opacity-0 transition-opacity duration-300"
+          class="text-muted-foreground ext-sm col-span-2 flex items-center justify-center gap-2 opacity-0 transition-opacity duration-300 md:col-span-1"
         >
           <Icon name="lucide:check" class="text-primary" />
           Draft autosaved
