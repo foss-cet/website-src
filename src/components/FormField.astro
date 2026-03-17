@@ -60,7 +60,7 @@ const fieldType = field.type as astroHTML.JSX.HTMLInputTypeAttribute
                     type={fieldType}
                     name={field.id}
                     value={opt}
-                    required={field.required && index === 0}
+                    required={field.type === 'radio' && field.required}
                     class="mr-2"
                   />
                   {opt}
