@@ -1,0 +1,31 @@
+---
+title: 'Arch Troubles'
+description: 'Taking on arch was not the easiest thing to do, but it taught me a lot of things'
+date: 2026-03-17
+image: ''
+authors: ['madhav']
+draft: false
+---
+
+Arch is a linux distribution which is usually portrayed as a difficult operating system to download and use, but provides a lot of freedom in styling or maintaining your OS. Due to this, me and my big head thought to download arch and try the installation by myself (which went horribly) and here's the story of how I started, and how its going.
+
+My first experience with a PC was an old desktop running wind\*ws 95, which ran as fast as you would expect. This piece of crap was replaced by another piece of crap running wind\*ws 10, which I had later replaced for ubuntu.
+
+Ubuntu was the first piece of software freedom I had ever used, and it was ugly. Felt good back then, since it behaved almost the same as wind\*ws, and I could run vscode on it pretty smoothly, so I was happy. Mind you, I still didnt know what a linux distribution was, I just thought linux ended at ubuntu.
+
+Arch was a whole new experience. Raw, unfiltered power of the hardware, but still difficult to use. I used my friend's usb drive to create the bootable device, with an arch iso file which took 15 mins to download v/s windows which takes 3 hours. (Yes, my internet is that bad. And no, I will not be using an ethernet cable)
+
+I was scared that I would need to create partitions by myself and started promptmaxxing perplexity, which in hindsight was a bad idea, since it doesn\'t know crap about setting up arch. Then I discovered that after 2021, there was a built-in "archinstall" command, which gave you a sort of GUI for installing arch.
+
+I wanted to use archinstall by myself and go in blind, which resulted in me messing up the install *11* times, forgetting to setup network manager in 5 of them. I also wanted to dual boot, but in the first try I had already wiped the wind*ws OS partition, so thats that. :P
+
+After finally setting up Arch linux (without existential crisis level partition problems), I wanted to ssh into it from my laptop - which needed wifi. This was a huge problem, since I had an outdated device-driver combo, or so I thought.
+
+I had a Tenda USB, which I thought was the wifi device, so I installed a whole lot of drivers from different parts of the internet, of which none worked. I used aic8800, aic8800d80, and so many more word soup variants, all which didnt recognize the device. Actually, the device was just a realtek wifi adapter, which just needed it\'s usb settings changed.
+
+I wasted 3 days on the Tenda USB problem, eventually realising that the problem was just a simple settings change. This taught me a lot of things, but patience is the most important to me, since I almost yanked my hair out from the frustration.
+
+I also installed the xfce-desktop package for no reason, and I\'m writing this blog on the new arch system.
+
+If you relate, or just want to gnu-shame me, you can find me in campus - or in zulip. I will be updating any other problems I have as well.
+
