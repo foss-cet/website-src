@@ -7,6 +7,6 @@ codeberg: 'https://codeberg.org/NandhuRamesh143'
 linkedin: 'https://www.linkedin.com/in/nandhu-ramesh-419635351/'
 mail: 'nandhuramesh2077@gmail.com'
 ---
-> _"A foolish man complains about his torn pocket while a wise man uses it to scratch his balls"_
+> _"Everyone is an atheist until they clog a toilet in someone else's house"_
 > <cite> ~Sun Tzu </cite>
 Proffessional Hater
