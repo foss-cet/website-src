@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 
 const { member } = Astro.props
 const memberPosts = await getPostsByAuthor(member.id)
-const { Content, headings } = await render(member)
+const { Content } = await render(member)
 ---
 
 <Layout class="max-w-3xl">

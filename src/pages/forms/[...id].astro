@@ -83,7 +83,6 @@ const fields = Astro.props.data.form.fields
       if (!form) return
 
       const storageKey = `autosave-form-${form.dataset.formId}`
-      let saveTimeout: ReturnType<typeof setTimeout>
 
       // load saved data on mount
       const savedData = JSON.parse(localStorage.getItem(storageKey) || '{}')

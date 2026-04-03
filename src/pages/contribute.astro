@@ -6,11 +6,11 @@ import TOCSidebar from '@/components/TOCSidebar.astro'
 import Layout from '@/layouts/Layout.astro'
 
 import { Content, getHeadings } from './_contribute.mdx'
-const headings = await getHeadings()
+const headings = getHeadings()
 
 const sections = [
   {
-    type: 'parent',
+    type: 'parent' as const,
     title: 'Contribution Guide',
     headings: headings,
   },
@@ -41,4 +41,3 @@ const sections = [
     </article>
   </section>
 </Layout>
-
