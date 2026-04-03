@@ -1,0 +1,44 @@
+---
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import PageHead from '@/components/PageHead.astro'
+import TOCHeader from '@/components/TOCHeader.astro'
+import TOCSidebar from '@/components/TOCSidebar.astro'
+import Layout from '@/layouts/Layout.astro'
+
+import { Content, getHeadings } from './_contribute.mdx'
+const headings = await getHeadings()
+
+const sections = [
+  {
+    type: 'parent',
+    title: 'Contribution Guide',
+    headings: headings,
+  },
+]
+---
+
+<Layout>
+  <PageHead slot="head" title="Contribution Guide" />
+  {
+    headings.length > 0 && (
+      <TOCHeader slot="table-of-contents" headings={headings} />
+    )
+  }
+
+  <section
+    class="mt-8 grid grid-cols-[minmax(0px,1fr)_min(calc(var(--breakpoint-md)-2rem),100%)_minmax(0px,1fr)] gap-y-6"
+  >
+    <div class="col-start-2">
+      <Breadcrumbs
+        items={[{ label: 'Contribute', icon: 'lucide:git-pull-request' }]}
+      />
+    </div>
+
+    <TOCSidebar sections={sections} currentPostId="contribute" />
+
+    <article class="prose dark:prose-invert col-start-2 max-w-none">
+      <Content />
+    </article>
+  </section>
+</Layout>
+

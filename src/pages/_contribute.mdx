@@ -1,0 +1,101 @@
+# Contribution Guide
+
+Welcome! We're thrilled that you're interested in contributing to the [FOSSCET website](https://fosscet.codeberg.page). This site is built by the community, for the community. Whether you want to add your member profile, write a blog post, document an event, or improve the codebase, this guide will help you get started.
+
+---
+
+## Local Development Setup
+
+To preview your changes locally before submitting them, you'll need to set up the project on your machine.
+
+You will need either [Node.js](https://nodejs.org/en) and [pnpm](https://pnpm.io), OR [bun](https://bun.sh) installed.
+
+### 1. Clone the repository
+
+```bash
+git clone https://codeberg.org/fosscet/website-src
+cd website-src
+pnpm i # or: bun install
+```
+
+### 2. Start the development server
+
+```bash
+pnpm run dev # or: bun run dev
+```
+
+### 3. Build the site (Optional)
+
+To verify that your changes build correctly for production:
+
+```bash
+pnpm run build # or: bun run build
+```
+
+---
+
+## Design & Styling
+
+For UI contributions or brand assets, please check our [Assets and Style Guide](/styleguide). It contains our official logos, typography, and color scheme
+
+---
+
+## Adding Your Member Profile
+
+Here is how you can add your very own member card.
+
+1. Create a markdown file named `<yourname>.md` in the `src/content/members/` directory.  
+   _(Example: If you want your handle to be `nik`, create `src/content/members/nik.md`)_
+2. To upload an avatar, put the image in `./public/images/myavatar.png`, and fill the form like so: `avatar: /public/images/myavatar.png`.
+3. Add your details using the frontmatter format below, followed by a longer bio if you'd like!
+
+### Member Card Template
+
+Everything except `name` and `avatar` is optional.
+
+```markdown
+---
+name: <Your name>
+pronouns: <Your pronouns>
+avatar: <Link to an avatar image, e.g., /public/images/myavatar.png>
+bio: <A quick, short bio>
+website: <Link to your personal website>
+github: <Link to your github profile>
+codeberg: <Link to your codeberg profile>
+linkedin: <Link to your linkedin profile>
+instagram: <Link to your instagram profile>
+mail: <You email address>
+---
+
+Detailed bio text goes here. This is a great space to introduce yourself, talk about your favorite FOSS projects, or share your tech stack! This section can be considerably longer than the short `bio` field above.
+```
+
+---
+
+## Writing a Blog Post
+
+Got an opinion piece, a tutorial, or a FOSS experience to share? We welcome blog contributions!
+
+1. Create a new file `your-post-title.md` (or `.mdx`) in `src/content/blog/`.
+2. Check out `src/content/blog/shortening-of-the-way/index.mdx` for a comprehensive example of the required frontmatter and formatting.
+3. **Important:** Remember to remove `draft: true` from your frontmatter when you are ready to publish!
+
+---
+
+## Documenting an Event
+
+1. Create a new file `event-name.md` (or `.mdx`) in `src/content/events/`
+2. Refer to the sample in `src/content/events/event_zero.mdx` for more info
+
+---
+
+## Creating a New Form
+
+Need to spin up a registration or feedback form?
+
+1. Create a file `my-form-id.md` in `src/content/forms/`.
+2. See the sample at `src/content/forms/test.mdx` for the form configuration schema.
+
+---
+
+_Thank you for contributing to FOSSCET! Every commit helps build a better, more open community._
