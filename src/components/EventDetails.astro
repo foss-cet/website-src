@@ -1,0 +1,109 @@
+---
+import Link from '@/components/Link.astro'
+import { cn } from '@/lib/utils'
+import { Icon } from 'astro-icon/components'
+
+interface Detail {
+  icon: string
+  label: string
+  value: string
+  href?: string
+}
+
+interface EventDetailsProps {
+  title?: string
+  date?: string
+  time?: string
+  venue?: string
+  requirements?: string
+  registration?: string
+  organiser?: string
+  website?: string
+  details?: Detail[]
+  variant?: 'default' | 'compact'
+  class?: string
+}
+
+const {
+  title,
+  date,
+  time,
+  venue,
+  requirements,
+  registration,
+  organiser,
+  website,
+  details = [],
+  variant = 'default',
+  class: className,
+} = Astro.props
+
+const builtIns: Detail[] = [
+  date && { icon: 'lucide:calendar', label: 'Date', value: date },
+  time && { icon: 'lucide:clock', label: 'Time', value: time },
+  venue && { icon: 'lucide:map-pin', label: 'Venue', value: venue },
+  requirements && { icon: 'lucide:backpack', label: 'Requirements', value: requirements },
+  registration && { icon: 'lucide:clipboard-check', label: 'Registration', value: registration, href: registration },
+  organiser && { icon: 'lucide:users', label: 'Organiser', value: organiser },
+  website && { icon: 'lucide:external-link', label: 'Website', value: website, href: website },
+].filter(Boolean) as Detail[]
+
+const allDetails = [...builtIns, ...details]
+---
+
+<div
+  class={cn(
+    'not-prose rounded-xl border',
+    variant === 'compact' ? 'p-3' : 'p-4',
+    className,
+  )}
+>
+  {
+    title && (
+      <span
+        class={cn(
+          'text-foreground flex items-center gap-2 font-medium',
+          variant === 'compact' ? 'mb-2 text-sm' : 'mb-3 text-base',
+        )}
+      >
+        <Icon name="lucide:info" class="size-4" />
+        {title}
+      </span>
+    )
+  }
+
+  <dl class="flex flex-col divide-y">
+    {
+      allDetails.map((detail) => (
+        <div
+          class={cn(
+            'flex flex-wrap items-center gap-x-4',
+            variant === 'compact' ? 'gap-y-0.5 py-1.5' : 'gap-y-1 py-2',
+            'first:pt-0 last:pb-0',
+          )}
+        >
+          <dt
+            class={cn(
+              'text-muted-foreground flex items-center gap-x-1.5 text-xs font-medium',
+              variant === 'compact' ? 'min-w-[90px]' : 'min-w-[110px]',
+            )}
+          >
+            <Icon name={detail.icon} class="size-3.5 shrink-0" />
+            {detail.label}
+          </dt>
+          <dd class="flex-1 text-sm">
+            {detail.href ? (
+              <Link href={detail.href} external underline>
+                {detail.value}
+              </Link>
+            ) : (
+              <span>{detail.value}</span>
+            )}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <slot />
+</div>
