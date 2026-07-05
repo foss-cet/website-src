@@ -1,6 +1,6 @@
 ---
 title: "RSVP: OSM Mapping Session"
-id: "pravcamp"
+id: "rsvp-pravcamp-osm"
 description: "RSVP here to reserve your spot for OSM mapping session."
 date: 2026-07-05
 form:

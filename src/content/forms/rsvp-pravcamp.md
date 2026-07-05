@@ -1,6 +1,6 @@
 ---
 title: "RSVP: PravCamp"
-id: "pravcamp"
+id: "rsvp-pravcamp"
 description: "RSVP here to reserve your spot for PravCamp."
 date: 2026-07-05
 form:
