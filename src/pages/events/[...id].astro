@@ -1,6 +1,6 @@
 ---
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
-import PostHead from '@/components/PostHead.astro'
+import PageHead from '@/components/PageHead.astro'
 import PostNavigation from '@/components/PostNavigation.astro'
 import TOCHeader from '@/components/TOCHeader.astro'
 import TOCSidebar from '@/components/TOCSidebar.astro'
@@ -34,7 +34,7 @@ const tocSections = await getTOCSections(currentEventId)
 ---
 
 <Layout>
-  <PostHead slot="head" post={event} />
+  <PageHead slot="head" title={event.data.title} description={event.data.description} />
   {
     headings?.length > 0 &&
       !(headings.length === 1 && headings[0].text === event.data.title) && (
