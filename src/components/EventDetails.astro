@@ -29,7 +29,6 @@ const builtIns: Detail[] = [
   time && { icon: 'lucide:clock', label: 'Time', value: time },
   venue && { icon: 'lucide:map-pin', label: 'Venue', value: venue },
   requirements && { icon: 'lucide:backpack', label: 'Requirements', value: requirements },
-  registration && { icon: 'lucide:clipboard-check', label: 'Registration', value: registration, href: registration },
   organiser && { icon: 'lucide:users', label: 'Organiser', value: organiser },
   website && { icon: 'lucide:external-link', label: 'Website', value: website, href: website },
 ].filter(Boolean) as Detail[]
@@ -90,6 +89,25 @@ const allDetails = [...builtIns, ...details]
       ))
     }
   </dl>
+
+  {
+    registration && (
+      <a
+        href={registration}
+        target="_blank"
+        rel="nofollow noreferrer noopener"
+        class={cn(
+          'mt-4 flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all',
+          'bg-primary text-primary-foreground hover:bg-primary/90',
+          'focus-visible:ring-ring/50 focus-visible:ring-[3px]',
+          variant === 'compact' && 'text-xs px-3 py-2',
+        )}
+      >
+        <Icon name="lucide:ticket" class="size-4" />
+        Register Now
+      </a>
+    )
+  }
 
   <slot />
 </div>
