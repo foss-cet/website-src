@@ -1,7 +1,7 @@
 ---
-title: "RSVP: Intro to Prav and the Fediverse"
-id: "prav"
-description: "RSVP here to reserve your spot for this event."
+title: "RSVP: OSM Mapping Session"
+id: "pravcamp"
+description: "RSVP here to reserve your spot for OSM mapping session."
 date: 2026-07-05
 form:
   submit_text: "Submit"
