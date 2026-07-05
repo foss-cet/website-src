@@ -1,6 +1,6 @@
 ---
 title: "RSVP: Intro to Prav and the Fediverse"
-id: "rsvp-pravcamp-livesession"
+id: "rsvp_pravcamp_livesession"
 description: "RSVP here to reserve your spot for the PravConf Talk on the topic \"Intro to Prav and the Fediverse\""
 date: 2026-07-05
 form:
