@@ -108,3 +108,7 @@
     @apply cursor-pointer;
   }
 }
+
+.table-left table {
+  @apply mx-0;
+}
