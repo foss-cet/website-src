@@ -46,6 +46,7 @@ const fields = Astro.props.data.form.fields
       method="POST"
       class="flex w-full flex-col items-start gap-12"
     >
+      <input type="hidden" name="submit_token" id="submit-token" />
       {fields.map((field) => <FormField field={field} />)}
       <div
         class="ml-auto grid w-full grid-cols-2 items-center justify-end gap-4 md:w-auto md:grid-cols-3"
@@ -84,6 +85,23 @@ const fields = Astro.props.data.form.fields
       if (!form) return
 
       const storageKey = `autosave-form-${form.dataset.formId}`
+
+      // Idempotency token: one per visitor session. Survives a refresh while
+      // filling out, so a retry or back-navigation resubmit won't duplicate.
+      const tokenKey = `submit-token-${form.dataset.formId}`
+      const token = sessionStorage.getItem(tokenKey) || crypto.randomUUID()
+      sessionStorage.setItem(tokenKey, token)
+      const tokenInput = document.getElementById('submit-token') as HTMLInputElement | null
+      if (tokenInput) tokenInput.value = token
+
+      // Guard against double-click / submit retries.
+      const submitBtn = form.querySelector<HTMLButtonElement>('[type="submit"]')
+      form.addEventListener('submit', () => {
+        if (submitBtn) {
+          submitBtn.disabled = true
+          submitBtn.textContent = 'Submitting…'
+        }
+      })
 
       // load saved data on mount
       const savedData = JSON.parse(localStorage.getItem(storageKey) || '{}')
