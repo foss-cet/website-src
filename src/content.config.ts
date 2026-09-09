@@ -82,9 +82,11 @@ const forms = defineCollection({
                   'select',
                   'checkbox',
                   'radio',
+                  'file',
                 ])
                 .default('text'),
               options: z.array(z.string()).optional(),
+              accept: z.string().optional(),
               required: z.boolean().default(false),
             }),
           )

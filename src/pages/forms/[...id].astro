@@ -44,6 +44,7 @@ const fields = Astro.props.data.form.fields
       action={`${FORM_POST_URL}${form.id}`}
       data-form-id={form.id}
       method="POST"
+      enctype="multipart/form-data"
       class="flex w-full flex-col items-start gap-12"
     >
       <input type="hidden" name="submit_token" id="submit-token" />
@@ -109,6 +110,7 @@ const fields = Astro.props.data.form.fields
       Object.entries(savedData).forEach(([name, value]) => {
         const inputs = form.querySelectorAll(`[name="${name}"]`)
         inputs.forEach((input: any) => {
+          if (input.type === 'file') return
           if (input.type === 'checkbox' || input.type === 'radio') {
             input.checked = Array.isArray(value)
               ? value.includes(input.value)
@@ -125,6 +127,7 @@ const fields = Astro.props.data.form.fields
         const data: Record<string, any> = {}
 
         for (const [key, value] of formData.entries()) {
+          if (value instanceof File) continue
           if (data[key]) {
             data[key] = [].concat(data[key], value as any)
           } else {
