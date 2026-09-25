@@ -88,6 +88,15 @@ const forms = defineCollection({
               options: z.array(z.string()).optional(),
               accept: z.string().optional(),
               required: z.boolean().default(false),
+              show_if: z
+                .object({
+                  field: z.string().regex(/^[a-zA-Z0-9_]+$/, {
+                    message:
+                      "show_if 'field' must reference a field id (letters, numbers, underscores).",
+                  }),
+                  equals: z.union([z.string(), z.array(z.string())]),
+                })
+                .optional(),
             }),
           )
           .min(1, {

@@ -18,6 +18,37 @@ export async function getStaticPaths() {
 const { Content } = await render(Astro.props)
 const form = Astro.props.data
 const fields = Astro.props.data.form.fields
+
+// Group consecutive fields sharing the same show_if into one fieldset.
+type Segment = {
+  sig: string | null
+  showField?: string
+  values?: string[]
+  legend?: string
+  fields: typeof fields
+}
+const segments: Segment[] = []
+for (const field of fields) {
+  const show = field.show_if
+  const values = show
+    ? Array.isArray(show.equals)
+      ? show.equals
+      : [show.equals]
+    : undefined
+  const sig = show ? JSON.stringify([show.field, values]) : null
+  const prev = segments[segments.length - 1]
+  if (prev && prev.sig === sig) {
+    prev.fields.push(field)
+  } else {
+    segments.push({
+      sig,
+      showField: show?.field,
+      values,
+      legend: values?.join(' / '),
+      fields: [field],
+    })
+  }
+}
 ---
 
 <Layout>
@@ -48,7 +79,30 @@ const fields = Astro.props.data.form.fields
       class="flex w-full flex-col items-start gap-12"
     >
       <input type="hidden" name="submit_token" id="submit-token" />
-      {fields.map((field) => <FormField field={field} />)}
+      {
+        segments.map((seg) =>
+          seg.showField ? (
+            <fieldset
+              data-show-field={seg.showField}
+              data-show-equals={JSON.stringify(seg.values)}
+              hidden
+              disabled
+              class="w-full"
+            >
+              <legend class="text-muted-foreground pb-2 pl-1">
+                {seg.legend}
+              </legend>
+              <div class="flex w-full flex-col items-start gap-12">
+                {seg.fields.map((field) => (
+                  <FormField field={field} />
+                ))}
+              </div>
+            </fieldset>
+          ) : (
+            seg.fields.map((field) => <FormField field={field} />)
+          ),
+        )
+      }
       <div
         class="ml-auto grid w-full grid-cols-2 items-center justify-end gap-4 md:w-auto md:grid-cols-3"
       >
@@ -83,16 +137,78 @@ const fields = Astro.props.data.form.fields
     const setupAutosave = () => {
       const form = document.querySelector<HTMLFormElement>('form[data-form-id]')
       const indicator = document.getElementById('save-indicator')
-      if (!form) return
+      // DOMContentLoaded and astro:page-load both fire on initial load; a
+      // second run would double listeners and stack action suffixes
+      if (!form || form.dataset.setup === '1') return
+      form.dataset.setup = '1'
 
       const storageKey = `autosave-form-${form.dataset.formId}`
+      const baseAction = form.action
+
+      // show_if: defined and registered before any storage work so field
+      // visibility survives autosave failures (eg. crypto.randomUUID is
+      // missing on insecure LAN origins). Disabled fieldsets are skipped by
+      // validation and the POST payload. ponytail: checkbox-group gating
+      // unsupported — use radio or select as the controlling field.
+      const applyShowIf = () => {
+        form
+          .querySelectorAll<HTMLFieldSetElement>('fieldset[data-show-field]')
+          .forEach((fs) => {
+            const values = JSON.parse(fs.dataset.showEquals || '[]')
+            const control = form.elements.namedItem(fs.dataset.showField!)
+            const value = (control as HTMLInputElement | undefined)?.value ?? ''
+            const match = values.includes(value)
+            fs.hidden = !match
+            fs.disabled = !match
+          })
+
+        // backend keeps a separate schema per subpanel:
+        // {form_id}_{subpanel}; forms without a 'subpanel' field are untouched
+        const subpanel = form.elements.namedItem(
+          'subpanel',
+        ) as HTMLSelectElement | null
+        if (subpanel?.value) {
+          form.action = `${baseAction}_${subpanel.value.replace(/\s+/g, '_')}`
+        }
+      }
+
+      const saveDraft = () => {
+        const formData = new FormData(form)
+        const data: Record<string, any> = {}
+
+        for (const [key, value] of formData.entries()) {
+          if (value instanceof File) continue
+          if (data[key]) {
+            data[key] = [].concat(data[key], value as any)
+          } else {
+            data[key] = value
+          }
+        }
+
+        localStorage.setItem(storageKey, JSON.stringify(data))
+        if (indicator) indicator.classList.remove('opacity-0')
+      }
+
+      applyShowIf()
+      // save runs before show_if so the snapshot still includes fields this
+      // change is about to disable
+      form.addEventListener('input', saveDraft)
+      form.addEventListener('input', applyShowIf)
 
       // Idempotency token: one per visitor session. Survives a refresh while
       // filling out, so a retry or back-navigation resubmit won't duplicate.
       const tokenKey = `submit-token-${form.dataset.formId}`
-      const token = sessionStorage.getItem(tokenKey) || crypto.randomUUID()
+      const token =
+        sessionStorage.getItem(tokenKey) ||
+        (typeof crypto.randomUUID === 'function'
+          ? crypto.randomUUID()
+          : // ponytail: randomUUID is secure-context-only; http://LAN origins
+            // get a weaker but unique-enough token
+            `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`)
       sessionStorage.setItem(tokenKey, token)
-      const tokenInput = document.getElementById('submit-token') as HTMLInputElement | null
+      const tokenInput = document.getElementById(
+        'submit-token',
+      ) as HTMLInputElement | null
       if (tokenInput) tokenInput.value = token
 
       // Guard against double-click / submit retries.
@@ -121,27 +237,8 @@ const fields = Astro.props.data.form.fields
         })
       })
 
-      // save data to localStorage on any input change
-      form.addEventListener('input', () => {
-        const formData = new FormData(form)
-        const data: Record<string, any> = {}
-
-        for (const [key, value] of formData.entries()) {
-          if (value instanceof File) continue
-          if (data[key]) {
-            data[key] = [].concat(data[key], value as any)
-          } else {
-            data[key] = value
-          }
-        }
-
-        localStorage.setItem(storageKey, JSON.stringify(data))
-
-        // show the "Draft saved" indicator
-        if (indicator) {
-          indicator.classList.remove('opacity-0')
-        }
-      })
+      // re-gate: the restored draft may have picked a different subpanel
+      applyShowIf()
 
       // clear localStorage on submit
       form.addEventListener('submit', () => {
